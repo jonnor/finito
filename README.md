@@ -1,8 +1,8 @@
 Finito State Machines
 ====================
 An experiment in Finite State Machines (FSM),
-making them introspectable, visually programmable and
-relating them to Flow-based Programming (FBP).
+and how they can be cross-language, introspectable,
+visually programmable and integrated with Flow-based Programming (FBP).
 
 
 Milestones
