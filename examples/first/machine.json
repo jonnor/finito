@@ -1,0 +1,21 @@
+{
+    "states": {
+        "on": { },
+        "starting": { },
+        "off": { }
+    },
+    "transitions": [
+        {"from":  "off",
+         "to": "starting",
+          "when": "button_on"},
+        {"from":  "starting",
+         "to": "on",
+          "when": "boot_done"},
+        {"from":  "on",
+          "to": "off",
+          "when": "button_off"}
+    ],
+    "initial": {
+        "state": "off"
+    }
+}

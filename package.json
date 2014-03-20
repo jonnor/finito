@@ -1,0 +1,32 @@
+{
+  "name": "finito",
+  "version": "0.0.1",
+  "description": "Tangible Finite State Machines",
+  "keywords": [
+    "fsm",
+    "finite state machine"
+  ],
+  "author": "Jon Nordby <jononor@gmail.com> (http://www.jonnor.com)",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jonnor/finito.git"
+  },
+  "bugs": "http://github.com/jonnor/finito/issues",
+  "homepage": "http://jonnor.com",
+  "license": "MIT",
+  "main": "./lib/microflo",
+  "bin": {
+    "microflo": "./microflo.js"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "commander": "~2.1.0",
+    "pkginfo": "~0.3.0",
+    "coffee-script": "^1.7.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  }
+}
