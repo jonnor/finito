@@ -12,6 +12,7 @@ typedef struct _FsmStateMachine {
     FsmStateId state;
     FsmStateChangeFunction change_cb;
     FsmRunFunction run;
+    const char **statenames;
 } FsmStateMachine;
 
 static void
@@ -24,12 +25,13 @@ change_state(FsmStateMachine *self, FsmStateId new_state) {
 
 // TODO: take full definition
 void
-fsm_state_machine_init(FsmStateMachine *self, FsmRunFunction run, FsmStateId initial) {
+fsm_state_machine_init(FsmStateMachine *self,
+                       FsmRunFunction run, FsmStateId initial, const char **statenames) {
     self->change_cb = 0;
     self->run = run;
     self->state = initial;
+    self->statenames = statenames;
 }
-
 
 void
 fsm_state_machine_run(FsmStateMachine *self) {
@@ -39,4 +41,8 @@ fsm_state_machine_run(FsmStateMachine *self) {
     }
 }
 
+const char *
+fsm_state_machine_statename(FsmStateMachine *self, FsmStateId id) {
+    return self->statenames[id];
+}
 
