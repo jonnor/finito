@@ -1,0 +1,29 @@
+{
+    "name": "TrafficLight",
+    "states": {
+        "green": { },
+        "yellow_to_red": { },
+        "yellow_to_green": { },
+        "red": { }
+    },
+    "transitions": [
+        {"from":  "green",
+         "to": "yellow_to_red",
+          "when": "next"},
+
+        {"from":  "yellow_to_red",
+         "to": "red",
+         "when": "next"},
+
+        {"from":  "red",
+          "to": "yellow_to_green",
+          "when": "next"},
+
+        {"from":  "yellow_to_green",
+          "to": "green",
+          "when": "next"}
+    ],
+    "initial": {
+        "state": "red"
+    }
+}
