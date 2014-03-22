@@ -1,26 +1,24 @@
 {
     "name": "TrafficLight",
     "states": {
-        "green": { },
-        "yellow": { },
-        "yellow_and_red": { },
-        "red": { }
+        "green": { "function": "set_lights(false,false,true)" },
+        "yellow": { "function": "set_lights(false,true,false)" },
+        "yellow_and_red": { "function": "set_lights(true,true,false)" },
+        "red": { "function": "set_lights(true,false,false)" }
     },
     "transitions": [
-        {"from":  "green",
-         "to": "yellow",
-          "when": "go_red"},
+        {"name": "go_red",
+         "from":  "green", "to": "yellow",
+          "when": "seconds_passed(1)"},
 
-        {"from":  "yellow",
-         "to": "red",
+        {"from":  "yellow", "to": "red",
          "when": "seconds_passed(1)"},
 
-        {"from":  "red",
-          "to": "yellow_and_red",
-          "when": "go_green"},
+        { "name": "go_green",
+          "from":  "red", "to": "yellow_and_red",
+          "when": "seconds_passed(10)"},
 
-        {"from":  "yellow_and_red",
-          "to": "green",
+        {"from":  "yellow_and_red", "to": "green",
           "when": "seconds_passed(1)"}
     ],
     "initial": {

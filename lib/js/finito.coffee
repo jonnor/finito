@@ -36,6 +36,13 @@ class Machine extends events.EventEmitter
         @emit 'statechange', @state, newState
         @state = newState
 
+extractFunctionNameAndArgs = (fun) ->
+    args = []
+    tok = fun.split '('
+    if tok.length > 1
+        fun = tok[0]
+        args = (tok[1][0..-2]).split ','
+    return [fun, args]
 
 normalizeMachineDefinition = (def) ->
     id = 0
@@ -44,19 +51,24 @@ normalizeMachineDefinition = (def) ->
         def.states[name].id = id++
         def.states[name].enum = def.name+'_'+name
 
-    for i in [0...def.transitions.length]
-        fun = def.transitions[i].when
-        name = def.transitions[i].when
-        args = []
-        tok = fun.split '('
-        if tok.length > 1
-            fun = tok[0]
-            args = (tok[1][0..-2]).split ','
+        # Function to use
+        fun = state.function || name
+        fun_args = extractFunctionNameAndArgs fun
+        def.states[name].function = fun_args[0]
+        def.states[name].args = fun_args[1]
 
-        def.transitions[i].when =
-            function: fun
-            args: args
+    for i in [0...def.transitions.length]
+        t = def.transitions[i]
+
+        # Transition name
+        name = t.name || t.when
         def.transitions[i].name = name
+
+        # Function predicate
+        fun_args = extractFunctionNameAndArgs def.transitions[i].when
+        def.transitions[i].when =
+            function: fun_args[0]
+            args: fun_args[1]
 
 nameToEnum = (name, values) ->
     return values[name].enum
@@ -69,6 +81,8 @@ idToName = (id, values) ->
         if val.id == id
             return name
 
+# TODO: support a domain-specific language
+# TODO: support extracting description from source file
 class Definition
     constructor: (data) ->
         @data = data
@@ -116,16 +130,18 @@ generateEnum = (name, prefix, enums) ->
     return out
 
 # IDEA: add a C machine definition based on function pointers that does not require any code generation
-
+# TODO: support callbacks in addition to polling transition functions
+# TODO: support enter/leave functions
 generateRunFunction = (name, def) ->
     indent = "    "
     r = "FinitoStateId " + name + "(FinitoStateId current_state) {\n"
 
     r += indent + "// Running state \n"
     r += indent + "switch (current_state) {\n"
-    for state, val of def.states
-        stateId = nameToEnum state, def.states
-        r+= indent + "case #{stateId}: #{state}(); break; \n"
+    for name, state of def.states
+        stateId = nameToEnum name, def.states
+        args = state.args.join ','
+        r+= indent + "case #{stateId}: #{state.function}(#{args}); break; \n"
     r += indent + "}\n"
     r += indent + "\n"
 

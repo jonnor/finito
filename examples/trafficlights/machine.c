@@ -2,48 +2,29 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// States
-void green() {
-    printf("\t%s\n", __PRETTY_FUNCTION__);
-}
-void yellow() {
-    printf("\tyellow\n");
-}
-void yellow_and_red() {
-    printf("\tyellow+red\n");
-}
-void red() {
-    printf("\t%s\n", __PRETTY_FUNCTION__);
+// State actions
+void set_lights(bool red, bool yellow, bool green) {
+    printf("[%s]\n[%s]\n[%s]\n",
+            red ? "*" : "",
+            yellow ? "*" : "",
+            green ? "*" : ""
+    );
 }
 
 // Transitions predicates
 bool seconds_passed(int seconds) {
+    // FIXME: don't busy sleep
     sleep(seconds);
-    return true;
-}
-bool go_red() {
-    return true;
-}
-bool go_green() {
     return true;
 }
 
 #include "finito.c"
 #include "machine-gen.c"
 
-void print_transition(FinitoMachine *fsm,
-                      FinitoStateId old, FinitoStateId new_state) {
-
-    printf("statechange %s -> %s\n",
-        finito_definition_statename(fsm->def, old),
-        finito_definition_statename(fsm->def, new_state)
-    );
-}
-
 int main(int argc, char *argv[]) {
     FinitoMachine m;
     finito_machine_init(&m, &TrafficLight_def);
-    m.on_state_change = print_transition;
+    m.on_state_change = finito_debug_print_transition;
 
     for (int i=0; i<5; i++) {
         finito_machine_run(&m);

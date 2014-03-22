@@ -55,5 +55,14 @@ finito_machine_run(FinitoMachine *self) {
     }
 }
 
-
+// Debugging
+void
+finito_debug_print_transition(FinitoMachine *fsm,
+                              FinitoStateId old,
+                              FinitoStateId new_state) {
+    printf("statechange: %s -> %s\n",
+        finito_definition_statename(fsm->def, old),
+        finito_definition_statename(fsm->def, new_state)
+    );
+}
 
