@@ -1,23 +1,30 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 
 // States
 void green() {
     printf("\t%s\n", __PRETTY_FUNCTION__);
 }
-void yellow_to_red() {
+void yellow() {
     printf("\tyellow\n");
 }
-void yellow_to_green() {
-    printf("\tyellow\n");
+void yellow_and_red() {
+    printf("\tyellow+red\n");
 }
 void red() {
     printf("\t%s\n", __PRETTY_FUNCTION__);
 }
 
-
 // Transitions predicates
-bool next() {
+bool seconds_passed(int seconds) {
+    sleep(seconds);
+    return true;
+}
+bool go_red() {
+    return true;
+}
+bool go_green() {
     return true;
 }
 

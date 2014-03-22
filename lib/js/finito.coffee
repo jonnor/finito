@@ -40,8 +40,23 @@ class Machine extends events.EventEmitter
 normalizeMachineDefinition = (def) ->
     id = 0
     for name, state of def.states
+        # Assign a numerical ID
         def.states[name].id = id++
         def.states[name].enum = def.name+'_'+name
+
+    for i in [0...def.transitions.length]
+        fun = def.transitions[i].when
+        name = def.transitions[i].when
+        args = []
+        tok = fun.split '('
+        if tok.length > 1
+            fun = tok[0]
+            args = (tok[1][0..-2]).split ','
+
+        def.transitions[i].when =
+            function: fun
+            args: args
+        def.transitions[i].name = name
 
 nameToEnum = (name, values) ->
     return values[name].enum
@@ -62,12 +77,14 @@ class Definition
     toDot: () ->
         indent = "    "
         r = "digraph #{} {\n"
-        r += indent+"rankdir=BT;\n    ranksep=\"0.10 equally\"\n"
+        r += indent+"rankdir=LR;\n    ranksep=\"0.02\"\n"
         for t in @data.transitions
-            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.when}\", minlen=2];\n"
+            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\", minlen=0.2];\n"
         # Mark the inital state
         r += indent+"start [style = invis, shape = none, label = \"\", width = 0, height = 0];\n"
         r += indent+"start -> #{@data.initial.state}"
+#        for state, val of @data.states
+#            r += indent+"start -> #{state} [label=\"\", style=invis];\n"
         r += "}";
         return r
 
@@ -110,14 +127,15 @@ generateRunFunction = (name, def) ->
         stateId = nameToEnum state, def.states
         r+= indent + "case #{stateId}: #{state}(); break; \n"
     r += indent + "}\n"
-
     r += indent + "\n"
 
     r += indent + "// Checking transition predicates \n"
     for transition in def.transitions
         fromId = nameToEnum transition.from, def.states
         toId = nameToEnum transition.to, def.states
-        r += indent+"if (current_state == #{fromId} && #{transition.when}() ) return #{toId};\n"
+        func = transition.when.function
+        args = transition.when.args.join ','
+        r += indent+"if (current_state == #{fromId} && #{func}(#{args}) ) return #{toId};\n"
 
     r += indent + "return current_state;\n"
     r += "}\n"
