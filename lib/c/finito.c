@@ -3,48 +3,57 @@
  * Finito may be freely distributed under the MIT license
  */
 
+// Common
+typedef int FinitoStateId;
+struct _FinitoDefinition;
 struct _FinitoMachine;
 
-typedef int FinitoStateId;
-typedef FinitoStateId (*FinitoRunFunction) (FinitoStateId current_state);
-typedef void (*FinitoStateChangeFunction) (struct _FinitoMachine *Finito,
-                                        FinitoStateId old, FinitoStateId newState);
+// Definition
+typedef FinitoStateId (*FinitoRunFunction)
+    (FinitoStateId current_state);
+typedef struct _FinitoDefinition {
+    FinitoStateId initial_state;
+    FinitoRunFunction run_function;
+    const char **statenames;
+} FinitoDefinition;
+
+const char *
+finito_definition_statename(FinitoDefinition *self, FinitoStateId id) {
+    return self->statenames[id];
+}
+
+// Machine
+typedef void (*FinitoStateChangeFunction)
+    (struct _FinitoMachine *Finito, FinitoStateId old, FinitoStateId newState);
 
 typedef struct _FinitoMachine {
+    FinitoDefinition *def;
     FinitoStateId state;
-    FinitoStateChangeFunction change_cb; // TODO: rename to on_state_change
-    FinitoRunFunction run;
-    const char **statenames;
+    FinitoStateChangeFunction on_state_change;
 } FinitoMachine;
 
 static void
 change_state(FinitoMachine *self, FinitoStateId new_state) {
-    if (self->change_cb) {
-        self->change_cb(self, self->state, new_state);
+    if (self->on_state_change) {
+        self->on_state_change(self, self->state, new_state);
     }
     self->state = new_state;
 }
 
-// TODO: take full definition
 void
-finito_machine_init(FinitoMachine *self,
-                       FinitoRunFunction run, FinitoStateId initial, const char **statenames) {
-    self->change_cb = 0;
-    self->run = run;
-    self->state = initial;
-    self->statenames = statenames;
+finito_machine_init(FinitoMachine *self, FinitoDefinition *def) {
+    self->def = def;
+    self->on_state_change = 0;
+    self->state = self->def->initial_state;
 }
 
 void
 finito_machine_run(FinitoMachine *self) {
-    const FinitoStateId new_state = self->run(self->state);
+    const FinitoStateId new_state = self->def->run_function(self->state);
     if (new_state != self->state) {
         change_state(self, new_state);
     }
 }
 
-const char *
-finito_machine_statename(FinitoMachine *self, FinitoStateId id) {
-    return self->statenames[id];
-}
+
 

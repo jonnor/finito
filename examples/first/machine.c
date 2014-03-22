@@ -30,15 +30,15 @@ bool button_off() {
 void print_transition(FinitoMachine *fsm,
                       FinitoStateId old, FinitoStateId new_state) {
 
-    const char * o = finito_machine_statename(fsm, old);
-    const char * n = finito_machine_statename(fsm, new_state);
+    const char * o = finito_definition_statename(fsm->def, old);
+    const char * n = finito_definition_statename(fsm->def, new_state);
     printf("statechange %s %s\n", o, n);
 }
 
 int main(int argc, char *argv[]) {
     FinitoMachine m;
-    finito_machine_init(&m, Machine_run, Machine_initial, Machine_statenames);
-    m.change_cb = print_transition;
+    finito_machine_init(&m, &Machine_def);
+    m.on_state_change = print_transition;
 
     finito_machine_run(&m);
     finito_machine_run(&m);
