@@ -79,3 +79,22 @@ Problem: for most tests, will need to manipulate inputs, and can't wrap those au
 * http://www.cse.ohio-state.edu/~lee/english/pdf/ieee-proceeding-survey.pdf
 * http://en.wikipedia.org/wiki/UML_state_machine#Orthogonal_regions
 
+Reusable state machine components
+===================================
+
+Allow parametrization
+For a power-up/down sequence, one should be to not have to generate one set of state+transition functions
+for every power in the sequece. Instead should be able to define that the different states use the same functions,
+but with different parameters.
+
+Can one have general, reusable components for state machines?
+To avoid having to always write own states and predicates
+    wait(x seconds): transitions to next state after X seconds
+
+Allow widely different implementations of same machine for different "runtimes"
+'wait' on microcontroller, periodically checks current time against time to wait for, or uses an interrupt
+'wait' on browser, uses a callback for the setTimeout JavaScript API
+Both cases need to capture some data when initially activated, possibly run a number of times in normal state, then do cleanup
+
+Implement as sub-machines, use enter/leave or dedicated init/exit states
+
