@@ -62,8 +62,12 @@ class Definition
     toDot: () ->
         indent = "    "
         r = "digraph #{} {\n"
+        r += indent+"rankdir=BT;\n    ranksep=\"0.10 equally\"\n"
         for t in @data.transitions
-            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.when}\"];\n"
+            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.when}\", minlen=2];\n"
+        # Mark the inital state
+        r += indent+"start [style = invis, shape = none, label = \"\", width = 0, height = 0];\n"
+        r += indent+"start -> #{@data.initial.state}"
         r += "}";
         return r
 
