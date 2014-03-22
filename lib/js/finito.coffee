@@ -12,6 +12,7 @@ pkginfo = (require 'pkginfo')(module)
 
 events = require 'events'
 
+
 class Machine extends events.EventEmitter
 
     constructor: (def, code) ->
@@ -42,6 +43,41 @@ normalizeMachineDefinition = (def) ->
         def.states[name].id = id++
         def.states[name].enum = def.name+'_'+name
 
+nameToEnum = (name, values) ->
+    return values[name].enum
+
+nameToId = (name, values) ->
+    return values[name].id
+
+idToName = (id, values) ->
+    for name, val of values
+        if val.id == id
+            return name
+
+class Definition
+    constructor: (data) ->
+        @data = data
+        normalizeMachineDefinition @data
+
+    toDot: () ->
+        indent = "    "
+        r = "digraph #{} {\n"
+        for t in @data.transitions
+            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.when}\"];\n"
+        r += "}";
+        return r
+
+
+Definition.fromJSON = (content) ->
+    d = JSON.parse content
+    return new Definition d
+
+Definition.fromFile = (file, callback) ->
+    fs = require 'fs'
+    fs.readFile file, (err, content) ->
+        callback null, Definition.fromJSON content
+
+
 # IDEA: split C codegen out into common library, share with MicroFlo?
 generateEnum = (name, prefix, enums) ->
     if Object.keys(enums).length == 0
@@ -57,17 +93,6 @@ generateEnum = (name, prefix, enums) ->
     out += "\n};\n"
 
     return out
-
-nameToEnum = (name, values) ->
-    return values[name].enum
-
-nameToId = (name, values) ->
-    return values[name].id
-
-idToName = (id, values) ->
-    for name, val of values
-        if val.id == id
-            return name
 
 # IDEA: add a C machine definition based on function pointers that does not require any code generation
 
@@ -125,7 +150,9 @@ generateCMachine = (def) ->
     g += generateDefinition name, def
     return g
 
+
 exports.Machine = Machine
+exports.Definition = Definition
 exports.main = () ->
 
     commander = require 'commander'
@@ -141,9 +168,19 @@ exports.main = () ->
         .description 'Generate (only needed for some target languages like C)'
         .action (infile, env) ->
             outfile = env.output || path.basename infile + '-gen.c'
+            Definition.fromFile infile, (err, d) ->
+                fs.writeFileSync outfile, generateCMachine d.data
 
-            d = JSON.parse fs.readFileSync infile
-            normalizeMachineDefinition d
-            fs.writeFileSync outfile, generateCMachine d
+    commander
+        .command 'dot'
+        .option '-o, --output <FILE>', 'Output file'
+        .description 'Generate DOT visualization of machine'
+        .action (infile, env) ->
+            Definition.fromFile infile, (err, d) ->
+                dot = d.toDot()
+                if env.output
+                    fs.writeFileSync outfile, dot
+                else
+                    console.log dot
 
     commander.parse process.argv
