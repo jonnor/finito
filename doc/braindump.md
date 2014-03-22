@@ -87,14 +87,53 @@ For a power-up/down sequence, one should be to not have to generate one set of s
 for every power in the sequece. Instead should be able to define that the different states use the same functions,
 but with different parameters.
 
+Allow boolean expressions
+If a transition predicate is just a boolean combination of predicate functions,
+it would be nice to express thisdirectly in the graph.
+Of course this neccitates a DSL definition and parser for the expressions,
+as well as a transator which makes it into valid target code.
+MicroFlo could then expose expressions on Packets?
+
 Can one have general, reusable components for state machines?
 To avoid having to always write own states and predicates
     wait(x seconds): transitions to next state after X seconds
+Can they be implement as sub-machines, using enter/leave or dedicated init/exit states?
 
 Allow widely different implementations of same machine for different "runtimes"
 'wait' on microcontroller, periodically checks current time against time to wait for, or uses an interrupt
 'wait' on browser, uses a callback for the setTimeout JavaScript API
 Both cases need to capture some data when initially activated, possibly run a number of times in normal state, then do cleanup
 
-Implement as sub-machines, use enter/leave or dedicated init/exit states
+
+FSM DSL
+========
+Current idea, inspired by .fbp DSL
+
+Machine definition
+
+    machine = "My Machine"
+
+State definition
+
+    machine.On(on_state_function, "Machine is On")
+
+Transition definition & usage
+    
+    machine.turn_on[turn_on_predicate, "On button pressed"]
+    machine.Off turn_on=> machine.Booting
+
+Shorthands
+
+    _ = "My machine"
+    Off() [button_on]=> Booting() [boot_done]=> On() [button_off]=> Off
+    # states/transition implicitly binds to the '_' machine
+    # _ can be reassigned during one file
+    # Description and function defaults to name of transition
+
+TODO:
+* Enter/leave states
+* Hierarchical state machine composition
+* Parametrized predicate/state functions
+* Boolean expressions in predicates
+
 
