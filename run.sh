@@ -1,1 +1,7 @@
-node fsm.js && cat mymachine-gen.c && gcc -o mymachine -std=c99 -g main.c && ./mymachine
+#!/bin/bash -xe
+
+EXAMPLE="examples/first/machine"
+node bin/finito generate -o ${EXAMPLE}-gen.c ${EXAMPLE}.json
+cat ${EXAMPLE}-gen.c
+gcc -o ${EXAMPLE} -Wall -Werror -std=c99 -g -I./lib/c ${EXAMPLE}.c
+./${EXAMPLE}
