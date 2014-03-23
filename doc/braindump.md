@@ -69,7 +69,6 @@ Should probably allow multiple, opt-in
 Allow in MicroFlo to easily create a component which uses FSM (actions+predicates plain C/C++)
 Allow in NoFlo to make a subgraph/component which uses FSM (no code gen, action+predicates are sub-flows)
 
-Tool should be able to run in browser (JavaScript) and have web UI. Usable standalone or integrated into NoFlo UI
 Even allow created STMs to run in the browser, when possible.
 
 Make testing easy, also of C/C++ based code. Have a set of typical test-classes one ones to perform.
@@ -136,4 +135,15 @@ TODO:
 * Parametrized predicate/state functions
 * Boolean expressions in predicates
 
+
+GUI
+----
+Tool should be able to run in browser (JavaScript) and have web UI. Usable standalone or integrated into NoFlo UI
+
+Resources
+* https://github.com/cpettitt/dagre-d3, http://jsfiddle.net/Qh9X5/1502/
+* http://cytoscape.github.io/cytoscape.js/
+* http://bl.ocks.org/rkirsling/5001347
+* https://github.com/laxatives/Edit-Arbor.js
+* http://visjs.org/docs/graph.html
 
