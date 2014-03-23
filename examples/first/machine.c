@@ -37,7 +37,7 @@ void print_transition(FinitoMachine *fsm,
 
 int main(int argc, char *argv[]) {
     FinitoMachine m;
-    finito_machine_init(&m, &Machine_def);
+    finito_machine_init(&m, &Machine_def, 0);
     m.on_state_change = print_transition;
 
     finito_machine_run(&m);

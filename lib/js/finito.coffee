@@ -9,9 +9,7 @@
 # FIXME: support a context object
 
 pkginfo = (require 'pkginfo')(module)
-
 events = require 'events'
-
 
 class Machine extends events.EventEmitter
 
@@ -114,10 +112,32 @@ Definition.fromJSON = (content) ->
     d = JSON.parse content
     return new Definition d
 
+Definition.fromFSM = (content) ->
+    peg = require 'pegjs'
+    fs = require 'fs'
+    fsm = peg.buildParser fs.readFileSync 'fsm.peg', {encoding: 'utf-8'}
+    #fsm = require '../../fsm.js'
+    j = fsm.parse content
+    return new Definition j
+
 Definition.fromFile = (file, callback) ->
     fs = require 'fs'
-    fs.readFile file, (err, content) ->
-        callback null, Definition.fromJSON content
+    path = require 'path'
+    fs.readFile file, {encoding: 'utf-8'}, (err, content) ->
+        if err
+            callback err, null
+
+        if (path.extname file) == '.json'
+            d = Definition.fromJSON content
+        else if (path.extname file) == '.fsm'
+            d = Definition.fromFSM content
+        else
+            # TODO: support scraping out definition from comments in js/coffee/c/cpp files
+            e = new Error ("Unknown file type " + path.extname file + " for " + file)
+            callback e, null
+
+        if d        
+            callback null, d
 
 
 # IDEA: split C codegen out into common library, share with MicroFlo?
@@ -272,6 +292,9 @@ exports.main = () ->
         .description 'Generate DOT visualization of machine'
         .action (infile, env) ->
             Definition.fromFile infile, (err, d) ->
+                if err
+                    throw err
+
                 dot = d.toDot()
                 if env.output
                     fs.writeFileSync outfile, dot

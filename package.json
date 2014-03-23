@@ -24,7 +24,8 @@
   "dependencies": {
     "commander": "~2.1.0",
     "pkginfo": "~0.3.0",
-    "coffee-script": "^1.7.1"
+    "coffee-script": "^1.7.1",
+    "pegjs": "^0.8.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1"

@@ -1,0 +1,94 @@
+/* Finito - Finite State Machines 
+ * Copyright (c) 2014 Jon Nordby <jononor@gmail.com>
+ * Finito may be freely distributed under the MIT license
+ */
+
+// Grammar for PEG.js, https://github.com/dmajda/pegjs
+{
+  var parser = this;
+  //parser.debug = true;  
+
+  parser.machine = {
+    name: "",
+    initial: {state: ""},
+    states: {},
+    transitions: []
+  }
+
+  parser.getResult = function() {
+    return parser.machine;
+  }
+
+  parser.addState = function(name, params) {
+    if (parser.debug) console.log('addState', name, params);
+    // TODO: respect params
+    parser.machine.states[name] = {}
+  }
+
+  parser.addTransition = function(from, to, when) {
+    if (parser.debug) console.log('addTransition', from, to, when);
+    var t = {from: from, to: to, when: when};
+    parser.machine.transitions.push(t);
+  }
+
+  parser.setAttribute = function(name, val) {
+    if (parser.debug) console.log('setAttribute', name, val);
+    if (name == "initial") {
+      parser.machine.initial.state = val;
+    } else {
+      parser.machine[name] = val;
+    }
+  }
+
+}
+
+
+start
+  = (line)*  { return parser.getResult();  }
+_
+  = (" "*)?
+__
+  = " "+
+  
+anychar
+  = [^\n\r\u2028\u2029]
+
+newline
+  = [\n\r\u2028\u2029]
+
+comment
+  = _ "#" (anychar)*
+
+line
+  = _ transition _ newline
+  / _ attribute _ newline
+  / _ state _ newline
+  / anychar* newline
+
+string
+  = "\"" anychar* "\""
+
+name
+  = chars:[a-zA-Z_\-]+ { return chars.join(''); }
+
+attribute
+  = name:name _ "=" _ val:name { return parser.setAttribute(name,val); }
+
+// TODO: capture params
+stateparams
+  = "(" ")" { return true; }
+
+state
+  = state:name params:stateparams? { if (params) { parser.addState(state,params); }; return state; }
+
+transition
+  = from:name _ "[" when:name "]=>" _ to:name { return parser.addTransition(from,to,when); }
+
+
+
+
+
+
+
+
+
