@@ -2,11 +2,7 @@
 name = Machine
 initial = off
 
-on()
-starting()
-off()
-
-off [button_on]=> starting
-starting [boot_done]=> on
+off() [button_on]=> starting()
+starting [boot_done]=> on()
 on [button_off]=> off
 

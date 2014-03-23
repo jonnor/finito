@@ -82,7 +82,7 @@ state
   = state:name params:stateparams? { if (params) { parser.addState(state,params); }; return state; }
 
 transition
-  = from:name _ "[" when:name "]=>" _ to:name { return parser.addTransition(from,to,when); }
+  = from:state _ "[" when:name "]=>" _ to:state { return parser.addTransition(from,to,when); }
 
 
 
