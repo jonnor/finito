@@ -30,14 +30,13 @@ typedef struct _FinitoMachine {
     FinitoDefinition *def;
     void *context;
     FinitoStateId state;
+    FinitoStateId prev_state;
     FinitoStateChangeFunction on_state_change;
 } FinitoMachine;
 
 static void
 change_state(FinitoMachine *self, FinitoStateId new_state) {
-    if (self->on_state_change) {
-        self->on_state_change(self, self->state, new_state);
-    }
+
     self->state = new_state;
 }
 
@@ -51,9 +50,19 @@ finito_machine_init(FinitoMachine *self, FinitoDefinition *def, void *context) {
 
 void
 finito_machine_run(FinitoMachine *self) {
-    const FinitoStateId new_state = self->def->run_function(self->state, self->context);
+    const FinitoStateId new_state = self->def->run_function(self->state, self->prev_state, self->context);
+    if (self->prev_state != self->state) {
+        if (self->on_state_changed) {
+            self->on_state_changed(self, self->prev_state, self->state);
+        }
+    }
+
+    self->prev_state = self->state;
     if (new_state != self->state) {
-        change_state(self, new_state);
+        self->state = new_state;
+        if (self->on_state_left) {
+            self->on_state_left(self, self->prev_state);
+        }
     }
 }
 

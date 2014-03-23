@@ -173,7 +173,7 @@ generateRunFunction = (name, def) ->
     r = "FinitoStateId " + name + "(FinitoStateId current_state, void *context) {\n"
 
     r += indent + "FinitoStateId new_state = current_state;\n\n"
-    r += indent + "// Running state \n"
+    r += indent + "// Transition predicates \n"
     r += indent + "switch (current_state) {\n"
     for name, state of def.states
         stateId = nameToEnum name, def.states
