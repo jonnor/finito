@@ -102,8 +102,8 @@ class Definition
         for t in @data.transitions
             r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\", minlen=0.2];\n"
         # Mark the inital state
-        r += indent+"start [style = invis, shape = none, label = \"\", width = 0, height = 0];\n"
-        r += indent+"start -> #{@data.initial.state}"
+        r += indent+"__start [style = invis, shape = none, label = \"\", width = 0, height = 0];\n"
+        r += indent+"__start -> #{@data.initial.state}"
 #        for state, val of @data.states
 #            r += indent+"start -> #{state} [label=\"\", style=invis];\n"
         r += "}";
@@ -164,7 +164,8 @@ generateRunFunction = (name, def) ->
             toId = nameToEnum transition.to, def.states
             func = transition.when.function
             args = normalizeCArgs transition.when.args, def
-            r += indent+indent+"if (#{func}(#{args}) ) new_state = #{toId}; break;\n"
+            predicate = if func == "true" or func == "false" then func else "#{func}(#{args})"
+            r += indent+indent+"if (#{predicate}) new_state = #{toId}; break;\n"
 
     r += indent+"default: break;\n"
     r += indent + "}\n"
@@ -179,7 +180,8 @@ generateRunFunction = (name, def) ->
         fun = state.leave.function
         if fun
             args = normalizeCArgs state.leave.args, def, true
-            r+= indent+"case #{stateId}: #{fun}(#{args}); break;\n"
+            predicate = if fun == "true" or fun == "false" then fun else "#{fun}(#{args})"
+            r+= indent+"case #{stateId}: #{predicate}; break;\n"
     r += indent+"default: break;\n"
     r += indent + "}\n"
 

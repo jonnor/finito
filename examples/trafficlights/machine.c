@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include <unistd.h>
 
 #include "finito.c"
 
@@ -35,13 +34,11 @@ typedef struct _TrafficLight {
 
 int main(int argc, char *argv[]) {
     TrafficLight s;
-    // FIXME: initialize via a start state?, allow to reset machine
-    reset_time(&s.time);
     FinitoMachine m;
     finito_machine_init(&m, &TrafficLight_def, &s);
     m.on_state_change = finito_debug_print_transition;
 
-    for (int i=0; i<60; i++) {
+    for (int i=0; i<30; i++) {
         g_current_time+=1; // Fast-forward time
         finito_machine_run(&m);
     }

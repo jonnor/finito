@@ -1,6 +1,8 @@
 {
     "name": "TrafficLight",
     "states": {
+        "start": { "enter": "set_lights(false,false,false)",
+                   "leave": "reset_time(_.time)" },
         "green": { "enter": "set_lights(false,false,true)",
                    "leave": "reset_time(_.time)" },
 
@@ -14,6 +16,10 @@
                "leave": "reset_time(_.time)" }
     },
     "transitions": [
+        {
+         "from":  "start", "to": "red",
+          "when": "true"},
+
         {"name": "go_red",
          "from":  "green", "to": "yellow",
           "when": "seconds_passed(3, _.time)"},
@@ -29,6 +35,6 @@
           "when": "seconds_passed(1, _.time)"}
     ],
     "initial": {
-        "state": "red"
+        "state": "start"
     }
 }
