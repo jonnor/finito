@@ -38,11 +38,12 @@ class Machine extends events.EventEmitter
 
 extractFunctionNameAndArgs = (fun) ->
     args = []
-    tok = fun.split '('
-    if tok.length > 1
-        fun = tok[0]
-        args = (tok[1][0..-2]).split ','
-    return [fun, args]
+    if fun
+        tok = fun.split '('
+        if tok.length > 1
+            fun = tok[0]
+            args = (tok[1][0..-2]).split ','
+    return {'function': fun, 'args': args}
 
 normalizeMachineDefinition = (def) ->
     id = 0
@@ -51,24 +52,30 @@ normalizeMachineDefinition = (def) ->
         def.states[name].id = id++
         def.states[name].enum = def.name+'_'+name
 
-        # Function to use
-        fun = state.function || name
-        fun_args = extractFunctionNameAndArgs fun
-        def.states[name].function = fun_args[0]
-        def.states[name].args = fun_args[1]
+        # Default run function to name if no enter or leave specified
+        run = state.run
+        if not run and not (state.enter or state.leave)
+            run = state.name
+        def.states[name].run = extractFunctionNameAndArgs run
+        def.states[name].enter = extractFunctionNameAndArgs state.enter
+        def.states[name].leave = extractFunctionNameAndArgs state.leave
 
     for i in [0...def.transitions.length]
         t = def.transitions[i]
+
+        # Attatch to state
+        if not def.states[t.from].transitions?
+            def.states[t.from].transitions = []
+        def.states[t.from].transitions.push t
 
         # Transition name
         name = t.name || t.when
         def.transitions[i].name = name
 
         # Function predicate
-        fun_args = extractFunctionNameAndArgs def.transitions[i].when
-        def.transitions[i].when =
-            function: fun_args[0]
-            args: fun_args[1]
+        def.transitions[i].when = extractFunctionNameAndArgs def.transitions[i].when
+
+    def.context = def.context || def.name
 
 nameToEnum = (name, values) ->
     return values[name].enum
@@ -129,31 +136,79 @@ generateEnum = (name, prefix, enums) ->
 
     return out
 
+normalizeCArgs = (args, def, readwrite) ->
+    ref = if readwrite then "&" else ""
+    ctx = "((#{def.context} *)(context))"
+    newargs = []
+    for a in args
+        newargs.push a.replace '_.', "#{ref}#{ctx}->"
+
+    return newargs.join ','
+
 # IDEA: add a C machine definition based on function pointers that does not require any code generation
 # TODO: support callbacks in addition to polling transition functions
-# TODO: support enter/leave functions
 generateRunFunction = (name, def) ->
     indent = "    "
-    r = "FinitoStateId " + name + "(FinitoStateId current_state) {\n"
+    r = "FinitoStateId " + name + "(FinitoStateId current_state, void *context) {\n"
 
+    r += indent + "FinitoStateId new_state = current_state;\n\n"
     r += indent + "// Running state \n"
     r += indent + "switch (current_state) {\n"
     for name, state of def.states
         stateId = nameToEnum name, def.states
-        args = state.args.join ','
-        r+= indent + "case #{stateId}: #{state.function}(#{args}); break; \n"
+        r+= indent + "case #{stateId}: \n"
+
+        # Transition predicate
+        for transition in state.transitions
+            fromId = nameToEnum transition.from, def.states
+            toId = nameToEnum transition.to, def.states
+            func = transition.when.function
+            args = normalizeCArgs transition.when.args, def
+            r += indent+indent+"if (#{func}(#{args}) ) new_state = #{toId}; break;\n"
+
+    r += indent+"default: break;\n"
     r += indent + "}\n"
     r += indent + "\n"
 
-    r += indent + "// Checking transition predicates \n"
-    for transition in def.transitions
-        fromId = nameToEnum transition.from, def.states
-        toId = nameToEnum transition.to, def.states
-        func = transition.when.function
-        args = transition.when.args.join ','
-        r += indent+"if (current_state == #{fromId} && #{func}(#{args}) ) return #{toId};\n"
+    r += indent+"if (new_state != current_state) {\n"
 
-    r += indent + "return current_state;\n"
+    r += indent + "// Leave\n"
+    r += indent + "switch (current_state) {\n"
+    for name, state of def.states
+        stateId = nameToEnum name, def.states
+        fun = state.leave.function
+        if fun
+            args = normalizeCArgs state.leave.args, def, true
+            r+= indent+"case #{stateId}: #{fun}(#{args}); break;\n"
+    r += indent+"default: break;\n"
+    r += indent + "}\n"
+
+    r += indent + "// Enter\n"
+    r += indent + "switch (new_state) {\n"
+    for name, state of def.states
+        stateId = nameToEnum name, def.states
+        fun = state.enter.function
+        if fun
+            args = normalizeCArgs state.enter.args, def, true
+            r+= indent+"case #{stateId}: #{fun}(#{args}); break; \n"
+    r += indent+"default: break;\n"
+    r += indent + "}\n"
+
+    r += indent + "}\n"
+
+    # TODO: only run if no state transition?
+    r += indent + "// Run\n"
+    r += indent + "switch (new_state) {\n"
+    for name, state of def.states
+        stateId = nameToEnum name, def.states
+        fun = state.run.function
+        if fun
+            args = normalizeCArgs state.run.args, def, true
+            r+= indent+"case #{stateId}: #{func}(#{args}); break; \n"
+    r += indent+"default: break;\n"
+    r += indent + "}\n"
+
+    r += indent + "return new_state;\n"
     r += "}\n"
     return r
 

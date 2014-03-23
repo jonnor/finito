@@ -10,7 +10,7 @@ struct _FinitoMachine;
 
 // Definition
 typedef FinitoStateId (*FinitoRunFunction)
-    (FinitoStateId current_state);
+    (FinitoStateId current_state, void *context);
 typedef struct _FinitoDefinition {
     FinitoStateId initial_state;
     FinitoRunFunction run_function;
@@ -28,6 +28,7 @@ typedef void (*FinitoStateChangeFunction)
 
 typedef struct _FinitoMachine {
     FinitoDefinition *def;
+    void *context;
     FinitoStateId state;
     FinitoStateChangeFunction on_state_change;
 } FinitoMachine;
@@ -41,15 +42,16 @@ change_state(FinitoMachine *self, FinitoStateId new_state) {
 }
 
 void
-finito_machine_init(FinitoMachine *self, FinitoDefinition *def) {
+finito_machine_init(FinitoMachine *self, FinitoDefinition *def, void *context) {
     self->def = def;
+    self->context = context;
     self->on_state_change = 0;
     self->state = self->def->initial_state;
 }
 
 void
 finito_machine_run(FinitoMachine *self) {
-    const FinitoStateId new_state = self->def->run_function(self->state);
+    const FinitoStateId new_state = self->def->run_function(self->state, self->context);
     if (new_state != self->state) {
         change_state(self, new_state);
     }
