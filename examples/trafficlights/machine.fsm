@@ -1,0 +1,35 @@
+# Attributes
+name = TrafficLight
+initial = start
+
+# States
+Start{E:set_lights(false,false,false) leave:reset_time R:null} "Start state"
+Red{E:set_lights(true,false,false) leave:reset_time}
+YellowRed{E:set_lights(true,true,false) L:reset_time} "Yellow & Red"
+Green{E:set_lights(false,false,true) leave:reset_time}
+Yellow{E:set_lights(false,true,false) leave:reset_time} "Yellow"
+
+# Transitions
+Start [true]=> red
+Red go_green[seconds_passed(2)] "go green" => YellowRed
+YellowRed [seconds_passed(3)] => Green
+Green go_red[seconds_passed(3)] "go red" => Yellow
+Yellow [seconds_passed(1)] => Red
+
+# Problem: repetition of action and transition functions
+
+# Full syntax, transitions declared not inline
+# go_red[seconds_passed(3,_.time)] "Go to red, through yellow"
+# green go_red=> yellow
+
+# TODO: support yes/no and on/off as equivalents to true/false
+
+# IDEA: implement statechart/table DSL?
+# | state    | E:set_lights        | L:reset_time | [seconds_passed]        | [true] |
+#
+# |  start   | (false,false,false) | ()           |                         | => red |
+# |  red     | (true,false,false)  | ()           | (10) => yellow_and_red  |        |
+# |  yellow_and_red | (true,true,false) | ()      | (2) => green            |        |
+
+
+
