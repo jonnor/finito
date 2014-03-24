@@ -147,3 +147,13 @@ Resources
 * https://github.com/laxatives/Edit-Arbor.js
 * http://visjs.org/docs/graph.html
 
+
+Testing
+----------
+* Log state transitions, verify that each state has been visisted (by manual or automated test)
+* Apply external stimuli to cause state transition, verify that it did happen
+* Drive a state transition directly from test, verify that state actions were as expected
+* Run machine in virtual/emulated environment, verify that no side-effects occur outside machine state
+* Modify constants/parameters/transitions order programatically from test,
+    run program X times, evaluate failure rates statistically
+
