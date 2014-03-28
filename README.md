@@ -19,8 +19,8 @@ Experimental
 
 Milestones
 -----------
-0.0.1: Statemachines for C/C++ can defined by .json, execute and be introspected
-0.1.0: One can create components for MicroFlo using Finito
+* 0.0.1: Simple statemachines can be defined, execute as C/C++ on microcontroller and as JavaScript in browser
+* 0.1.0: One can create components for MicroFlo using Finito
 
 License
 --------
