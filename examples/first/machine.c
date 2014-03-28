@@ -1,28 +1,31 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+typedef struct {
+
+} Machine;
+
 // States
-void on() {
+void on(Machine *s) {
     printf("\tOn\n");
 }
-void starting() {
+void starting(Machine *s) {
     printf("\tStarting\n");
 }
-void off() {
+void off(Machine *s) {
     printf("\tOff\n");
 }
 
 // Transitions predicates
-bool button_on() {
+bool button_on(const Machine *s) {
     return true;
 }
-bool boot_done() {
+bool boot_done(const Machine *s) {
     return true;
 }
-bool button_off() {
+bool button_off(const Machine *s) {
     return true;
 }
-
 
 #include "finito.c"
 #include "machine-gen.c"

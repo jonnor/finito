@@ -2,18 +2,18 @@
     "name": "TrafficLight",
     "states": {
         "start": { "enter": "set_lights(false,false,false)",
-                   "leave": "reset_time(_.time)" },
+                   "leave": "reset_time()" },
         "green": { "enter": "set_lights(false,false,true)",
-                   "leave": "reset_time(_.time)" },
+                   "leave": "reset_time()" },
 
         "yellow": { "enter": "set_lights(false,true,false)",
-                   "leave": "reset_time(_.time)" },
+                   "leave": "reset_time()" },
 
         "yellow_and_red": { "enter": "set_lights(true,true,false)",
-                          "leave": "reset_time(_.time)" },
+                          "leave": "reset_time()" },
 
         "red": { "enter": "set_lights(true,false,false)",
-               "leave": "reset_time(_.time)" }
+               "leave": "reset_time()" }
     },
     "transitions": [
         {
@@ -22,17 +22,17 @@
 
         {"name": "go_red",
          "from":  "green", "to": "yellow",
-          "when": "seconds_passed(3, _.time)"},
+          "when": "seconds_passed(3)"},
 
         {"from":  "yellow", "to": "red",
-         "when": "seconds_passed(1, _.time)"},
+         "when": "seconds_passed(1)"},
 
         { "name": "go_green",
           "from":  "red", "to": "yellow_and_red",
-          "when": "seconds_passed(10, _.time)"},
+          "when": "seconds_passed(10)"},
 
         {"from":  "yellow_and_red", "to": "green",
-          "when": "seconds_passed(1, _.time)"}
+          "when": "seconds_passed(1)"}
     ],
     "initial": {
         "state": "start"

@@ -8,27 +8,28 @@ long current_time() {
     return g_current_time;
 }
 
+
+// State
+typedef struct _TrafficLight {
+    long time;
+} TrafficLight;
+
 // State actions
-void set_lights(bool red, bool yellow, bool green) {
+void set_lights(TrafficLight *state, bool red, bool yellow, bool green) {
     printf("[%s]\n[%s]\n[%s]\n",
             red ? "*" : "",
             yellow ? "*" : "",
             green ? "*" : ""
     );
 }
-void reset_time(long *time) {
-    *time = current_time();
+void reset_time(TrafficLight *state) {
+    state->time = current_time();
 }
 
 // Transitions predicates
-bool seconds_passed(long seconds, long since) {
-    return (current_time() >= since+seconds);
+bool seconds_passed(const TrafficLight *state, long seconds) {
+    return (current_time() >= state->time+seconds);
 }
-
-// State
-typedef struct _TrafficLight {
-    long time;
-} TrafficLight;
 
 #include "machine-gen.c"
 

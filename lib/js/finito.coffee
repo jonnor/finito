@@ -157,11 +157,12 @@ generateEnum = (name, prefix, enums) ->
     return out
 
 normalizeCArgs = (args, def, readwrite) ->
-    ref = if readwrite then "&" else ""
-    ctx = "((#{def.context} *)(context))"
-    newargs = []
+    ref = if readwrite then "" else "const "
+    ctx = "(#{ref}#{def.context} *)(context)"
+    newargs = [ctx]
     for a in args
-        newargs.push a.replace '_.', "#{ref}#{ctx}->"
+        if a
+            newargs.push a
 
     return newargs.join ','
 
