@@ -1,0 +1,19 @@
+{
+  "name": "finito",
+  "description": "Cross-domain Finite State Machines",
+  "author": "Jon Nordby <jononor@gmail.com>",
+  "repo": "jonnor/finito",
+  "version": "0.0.1",
+  "keywords": [
+    "FBP"
+  ],
+  "dependencies": {
+  },
+  "main": "lib/js/finito.js",
+  "scripts": [
+    "build/finito.js"
+  ],
+  "json": [
+    "component.json"
+  ]
+}
