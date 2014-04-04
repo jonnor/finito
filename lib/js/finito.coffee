@@ -269,6 +269,9 @@ generateCMachine = (def) ->
 
 exports.Machine = Machine
 exports.Definition = Definition
+exports.isBrowser = ->
+    return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
+
 exports.main = () ->
 
     commander = require 'commander'

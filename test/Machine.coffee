@@ -3,7 +3,10 @@
 # Finito may be freely distributed under the MIT license
 ##
 
-finito = require '../../lib/js/finito'
+if typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1
+    finito = require '../lib/js/finito'
+else
+    finito = require '../build/finito'
 
 describe 'Machine', ->
 
