@@ -9,7 +9,7 @@
   ],
   "dependencies": {
   },
-  "main": "lib/js/finito.js",
+  "main": "build/finito.js",
   "scripts": [
     "build/finito.js"
   ],

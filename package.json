@@ -14,12 +14,15 @@
   "bugs": "http://github.com/jonnor/finito/issues",
   "homepage": "http://jonnor.com",
   "license": "MIT",
-  "main": "./lib/microflo",
+  "main": "./lib/js/finito",
   "bin": {
-    "microflo": "./microflo.js"
+    "finito": "./bin/finito"
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "grunt test"
   },
   "dependencies": {
     "commander": "~2.1.0",

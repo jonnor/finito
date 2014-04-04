@@ -15,7 +15,7 @@ class Machine extends events.EventEmitter
 
     constructor: (def, code) ->
         @def = def
-        @state = def.initial.state
+        @state = def.data.initial.state
         @code = code
 
     run: () =>
@@ -269,6 +269,9 @@ generateCMachine = (def) ->
 
 exports.Machine = Machine
 exports.Definition = Definition
+exports.isBrowser = ->
+    return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
+
 exports.main = () ->
 
     commander = require 'commander'

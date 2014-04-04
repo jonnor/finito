@@ -12,6 +12,15 @@ module.exports = ->
         dest: 'build/'
         ext: '.js'
 
+      test:
+        options:
+          bare: true
+        expand: true
+        cwd: 'test'
+        src: ['**.coffee']
+        dest: 'test'
+        ext: '.js'
+
     # Browser version building
     component:
       install:
