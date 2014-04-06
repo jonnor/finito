@@ -3,36 +3,45 @@
 # Finito may be freely distributed under the MIT license
 ##
 
-# TODO: allow to calculate all impossible paths, for a given state and whole machine
 
-# TODO: allow machine definition together with states
-# FIXME: support a context object
+exports.isBrowser = ->
+    return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
-pkginfo = (require 'pkginfo')(module)
+if not exports.isBrowser()
+    pkginfo = (require 'pkginfo')(module)
 events = require 'events'
+
 
 class Machine extends events.EventEmitter
 
-    constructor: (def, code) ->
+    constructor: (def, code, context) ->
         @def = def
-        @state = def.data.initial.state
+        @state = null
         @code = code
+        @context = context
+
+        @changeState def.data.initial.state
 
     run: () =>
-        @execute @state
+        @execute @def.data.states[@state].run
 
-        for transition in @def.transitions
-            if @state == transition.from and @execute transition.when
+        for transition in @def.data.transitions
+            if @state == transition.from and (@execute transition.when)
                 @changeState transition.to
                 break
 
-    execute: (name) =>
-        return @code[name]()
+    execute: (funcobj) =>
+        return unless funcobj.function
+        return true if funcobj.function == "true"
+        # XXX: use proper function application with args
+        return @code[funcobj.function](@context, funcobj.args[0], funcobj.args[1], funcobj.args[2], funcobj.args[3])
 
     changeState: (newState) =>
-        # TODO: support enter/leave states
+        if @state
+            @execute @def.data.states[@state].leave
         @emit 'statechange', @state, newState
         @state = newState
+        @execute @def.data.states[@state].enter
 
 extractFunctionNameAndArgs = (fun) ->
     args = []
@@ -40,7 +49,12 @@ extractFunctionNameAndArgs = (fun) ->
         tok = fun.split '('
         if tok.length > 1
             fun = tok[0]
-            args = (tok[1][0..-2]).split ','
+            tempargs = (tok[1][0..-2]).split ','
+            for a in tempargs
+                number = parseInt a
+                a = number if not number is NaN
+                args.push a
+
     return {'function': fun, 'args': args}
 
 normalizeMachineDefinition = (def) ->
@@ -86,7 +100,7 @@ idToName = (id, values) ->
         if val.id == id
             return name
 
-# TODO: support a domain-specific language
+# TODO: allow to calculate all impossible paths, for a given state and whole machine
 # TODO: support extracting description from source file
 class Definition
     constructor: (data) ->
@@ -311,8 +325,6 @@ generateCMachine = (def) ->
 
 exports.Machine = Machine
 exports.Definition = Definition
-exports.isBrowser = ->
-    return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
 exports.main = () ->
 
