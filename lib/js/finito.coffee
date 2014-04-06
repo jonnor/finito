@@ -120,24 +120,66 @@ Definition.fromFSM = (content) ->
     j = fsm.parse content
     return new Definition j
 
+Definition.fromString = (content, type) ->
+    if (type) == 'json'
+        d = Definition.fromJSON content
+    else if (type) == 'fsm'
+        d = Definition.fromFSM content
+    else
+        throw new Error ("Unknown file type " + path.extname file + " for " + file)
+
+    return d
+
 Definition.fromFile = (file, callback) ->
     fs = require 'fs'
     path = require 'path'
     fs.readFile file, {encoding: 'utf-8'}, (err, content) ->
         if err
             callback err, null
-
-        if (path.extname file) == '.json'
-            d = Definition.fromJSON content
-        else if (path.extname file) == '.fsm'
-            d = Definition.fromFSM content
         else
-            # TODO: support scraping out definition from comments in js/coffee/c/cpp files
-            e = new Error ("Unknown file type " + path.extname file + " for " + file)
-            callback e, null
+            try
+                d = Definition.fromString content, (path.extname file)[1..]
+            catch e
+                return callback e, null
 
-        if d        
-            callback null, d
+            return callback null, d
+
+Definition.fromHttp = (url, callback) ->
+
+    if exports.isBrowser
+        req = new XMLHttpRequest
+        req.onreadystatechange = ->
+            return unless req.readyState is 4
+
+            if req.status is not 200
+                return callback new Error(""), null
+            else
+                try
+                    # FIXME: support .fsm and others, either from filename in url or mimetype
+                    d = Definition.fromString req.responseText, 'json'
+                catch e
+                    return callback e, null
+
+                return callback null, d
+
+        req.open 'GET', url, true
+        req.send()
+
+    else
+        http = require 'http'
+        throw new Error "HTTP GET not implemented on node.js"
+
+        # FIXME: implement http GET for node.js
+
+        if err
+            callback err, null
+        else
+            try
+                d = Definition.fromString content, (path.extname file)[1..]
+            catch e
+                return callback e, null
+
+            return callback null, d
 
 
 # IDEA: split C codegen out into common library, share with MicroFlo?
