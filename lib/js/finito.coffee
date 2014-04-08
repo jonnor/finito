@@ -7,12 +7,13 @@
 exports.isBrowser = ->
     return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
-if not exports.isBrowser()
+if exports.isBrowser()
+    EventEmitter = require 'emitter'
+else
     pkginfo = (require 'pkginfo')(module)
-events = require 'events'
+    EventEmitter = (require 'events').EventEmitter
 
-
-class Machine extends events.EventEmitter
+class Machine extends EventEmitter
 
     constructor: (def, code, context) ->
         @def = def

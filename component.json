@@ -8,6 +8,7 @@
     "FBP"
   ],
   "dependencies": {
+    "component/emitter": "*"
   },
   "main": "build/finito.js",
   "scripts": [
