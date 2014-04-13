@@ -53,8 +53,12 @@ extractFunctionNameAndArgs = (fun) ->
             tempargs = (tok[1][0..-2]).split ','
             for a in tempargs
                 number = parseInt a
-                a = number if not number is NaN
-                args.push a
+                if not isNaN number
+                    args.push number
+                else if a == "false" or a == "true"
+                    args.push a == "true"
+                else
+                    args.push a
 
     return {'function': fun, 'args': args}
 
