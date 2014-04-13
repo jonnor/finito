@@ -58,7 +58,8 @@ extractFunctionNameAndArgs = (fun) ->
                 else if a == "false" or a == "true"
                     args.push a == "true"
                 else
-                    args.push a
+                    if a.length > 0
+                        args.push a
 
     return {'function': fun, 'args': args}
 
@@ -222,7 +223,7 @@ normalizeCArgs = (args, def, readwrite) ->
     ctx = "(#{ref}#{def.context} *)(context)"
     newargs = [ctx]
     for a in args
-        if a
+        if a?
             newargs.push a
 
     return newargs.join ','
