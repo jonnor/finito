@@ -7,9 +7,7 @@
 #include "finito.c"
 
 long g_current_time = 0;
-const int redLed = 5;
-const int yellowLed = 4;
-const int greenLed = 3;
+const int redLed = 5, yellowLed = 4, greenLed = 3;
 
 long current_time(void) {
 #ifdef ARDUINO
