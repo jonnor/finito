@@ -62,9 +62,15 @@ void
 finito_debug_print_transition(FinitoMachine *fsm,
                               FinitoStateId old,
                               FinitoStateId new_state) {
+#ifdef ARDUINO
+    Serial.print(old);
+    Serial.print(" to ");
+    Serial.println(new_state);
+#else
     printf("state changed: %s -> %s\n",
         finito_definition_statename(fsm->def, old),
         finito_definition_statename(fsm->def, new_state)
     );
+#endif
 }
 

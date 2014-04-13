@@ -3,5 +3,5 @@
 EXAMPLE="examples/trafficlights/machine"
 node bin/finito generate -o ${EXAMPLE}-gen.c ${EXAMPLE}.json
 cat ${EXAMPLE}-gen.c
-gcc -o ${EXAMPLE} -Wall -Werror -std=c99 -g -I./lib/c ${EXAMPLE}.c
+g++ -o ${EXAMPLE} -Wall -Werror -g -I./lib/c -Iexamples/trafficlights examples/trafficlights/src/machine.cpp
 ./${EXAMPLE}
