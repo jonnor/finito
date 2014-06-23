@@ -104,6 +104,12 @@ Allow widely different implementations of same machine for different "runtimes"
 Both cases need to capture some data when initially activated, possibly run a number of times in normal state, then do cleanup
 
 
+Relation to HW/UI/interaction prototyping
+==============================
+
+http://snips.net/blog/posts/2014/05-04-fast-interactive_prototyping_with_d3_js_II.html
+
+
 FSM DSL
 ========
 Current idea, inspired by .fbp DSL
