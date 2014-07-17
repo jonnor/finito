@@ -16,5 +16,8 @@
   ],
   "json": [
     "component.json"
+  ],
+  "remotes": [
+    "https://raw.githubusercontent.com"
   ]
 }
