@@ -163,3 +163,18 @@ Testing
 * Modify constants/parameters/transitions order programatically from test,
     run program X times, evaluate failure rates statistically
 
+
+
+Others on Finite State Machines
+===============================
+
+
+"You may not like the idea of auto-generated code today,
+but I guarantee that once you program for a state machine framework,
+you'll see the benefits of the overall structure
+and be ready to move up a level in programming efficiency."
+- Michael Barr, http://www.embedded.com/electronics-blogs/barr-code/4372183/Trends-in-embedded-software-design
+
+! Finito allows programming with state machines *without* generating code.
+
+
