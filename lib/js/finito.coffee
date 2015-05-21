@@ -202,7 +202,7 @@ Definition.fromHttp = (url, callback) ->
             return callback null, d
 
 
-# IDEA: split C codegen out into common library, share with MicroFlo?
+# TODO: use declarec instead of custom code generation for declarations
 generateEnum = (name, prefix, enums) ->
     if Object.keys(enums).length == 0
         return ""
