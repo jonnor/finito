@@ -182,4 +182,6 @@ and be ready to move up a level in programming efficiency."
 
 ! Finito allows programming with state machines *without* generating code.
 
-
+"Actually, the main issue isn’t so much designing the state machine, but rather implementing it.
+Even in 2015, we don’t really have a good, widely-accepted set of tools for working with state machines in languages like C or Java."
+- http://www.embeddedrelated.com/showarticle/723.php
