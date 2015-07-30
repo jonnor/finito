@@ -88,7 +88,7 @@ module.exports = ->
 
   # Grunt plugins used for building
   @loadNpmTasks 'grunt-contrib-coffee'
-  @loadNpmTasks 'grunt-component'
+  @loadNpmTasks 'grunt-component-io'
   @loadNpmTasks 'grunt-component-build'
   @loadNpmTasks 'grunt-contrib-uglify'
   @loadNpmTasks 'grunt-combine'
