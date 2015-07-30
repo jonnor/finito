@@ -7,11 +7,7 @@
 exports.isBrowser = ->
     return not (typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1)
 
-if exports.isBrowser()
-    EventEmitter = require 'emitter'
-else
-    pkginfo = (require 'pkginfo')(module)
-    EventEmitter = (require 'events').EventEmitter
+EventEmitter = (require 'events').EventEmitter
 
 class Machine extends EventEmitter
 
@@ -337,6 +333,7 @@ exports.main = () ->
     commander = require 'commander'
     fs = require 'fs'
     path = require 'path'
+    pkginfo = (require 'pkginfo')(module)
 
     commander
         .version module.exports.version
