@@ -131,7 +131,9 @@ Definition.fromJSON = (content) ->
 Definition.fromFSM = (content) ->
     peg = require 'pegjs'
     fs = require 'fs'
-    fsm = peg.buildParser fs.readFileSync 'fsm.peg', {encoding: 'utf-8'}
+    path = require 'path'
+    grammarfile = path.join __dirname, '..', '..', 'fsm.peg'
+    fsm = peg.buildParser fs.readFileSync grammarfile, {encoding: 'utf-8'}
     #fsm = require '../../fsm.js'
     j = fsm.parse content
     return new Definition j
