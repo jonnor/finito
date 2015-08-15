@@ -116,14 +116,23 @@ class Definition
     toDot: () ->
         indent = "    "
         r = "digraph #{} {\n"
-        r += indent+"rankdir=LR;\n    ranksep=\"0.02\"\n"
+        r += indent+"rankdir=LR;\n ranksep=\"0.07\"\n"
+        r += indent+ "node  [style=\"rounded,filled,bold\", width=0.4]"
+
+        for state, val of @data.states
+            r += indent+"#{state} [];\n"
+
         for t in @data.transitions
-            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\", minlen=0.2];\n"
+            r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\"];\n"
         # Mark the inital state
-        r += indent+"__start [style = invis, shape = none, label = \"\", width = 0, height = 0];\n"
+        r += indent+"__start [fillcolor=black, shape=circle, label=\"\", width=0.25];\n"
         r += indent+"__start -> #{@data.initial.state}"
-#        for state, val of @data.states
-#            r += indent+"start -> #{state} [label=\"\", style=invis];\n"
+
+        # Mark the exit state, if any
+        if @data.exit.state
+            r += indent+"__exit [fillcolor=black, shape=doublecircle, label=\"\", width=0.25];\n"
+            r += indent+"#{@data.exit.state} -> __exit"
+
         r += "}";
         return r
 
@@ -356,6 +365,7 @@ exports.main = () ->
         .option '-o, --output <FILE>', 'Output file'
         .description 'Generate DOT visualization of machine'
         .action (infile, env) ->
+            outfile = env.output || path.basename infile + 'fsm.dot'
             Definition.fromFile infile, (err, d) ->
                 if err
                     throw err
