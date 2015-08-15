@@ -34,8 +34,10 @@
 
   parser.setAttribute = function(name, val) {
     if (parser.debug) console.log('setAttribute', name, val);
-    if (name == "initial" || name == "exit") {
+    if (name == "initial") {
       parser.machine.initial.state = val;
+    } else if (name == "exit") {
+      parser.machine.exit.state = val;
     } else {
       parser.machine[name] = val;
     }
