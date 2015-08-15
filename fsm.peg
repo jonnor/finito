@@ -20,10 +20,15 @@
     return parser.machine;
   }
 
-  parser.addState = function(name, params) {
-    if (parser.debug) console.log('addState', name, params);
-    // TODO: respect params
-    parser.machine.states[name] = {}
+  parser.state = function(name, params) {
+    if (parser.debug) console.log('state', name, params, parser.machine.states);
+    states = parser.machine.states;
+    if (!states[name]) {
+        states[name] = {};
+    }
+    if (params && Object.keys(params).length) {
+        states[name] = params;
+    }
   }
 
   parser.addTransition = function(from, to, when) {
@@ -41,23 +46,29 @@
     } else {
       parser.machine[name] = val;
     }
+    if (parser.debug) console.log('setattribute done', parser.machine);
   }
 
 }
 
 
+// Common defs
 start
-  = (line)*  { return parser.getResult();  }
+  = (line)*
+  { return parser.getResult();  }
 _
   = (" "*)?
 __
   = " "+
+
+newline
+  = [\n\r\u2028\u2029]
   
 anychar
   = [^\n\r\u2028\u2029]
 
-newline
-  = [\n\r\u2028\u2029]
+notspecial
+  = [a-zA-Z*0-9_\-.]
 
 comment
   = _ "#" (anychar)*
@@ -65,27 +76,58 @@ comment
 line
   = _ transition _ newline
   / _ attribute _ newline
-  / _ state _ newline
+  / _ newstate _ newline
   / anychar* newline
 
 string
   = "\"" anychar* "\""
 
 name
-  = chars:[a-zA-Z_\-]+ { return chars.join(''); }
+  = chars:notspecial+
+  { return chars.join(''); }
 
+// Attributes
 attribute
-  = name:name _ "=" _ val:name { return parser.setAttribute(name,val); }
+  = name:name _ "=" _ val:name
+  { return parser.setAttribute(name,val); }
 
-// TODO: capture params
+// State
+funcvalue "function"
+  = chars: notspecial+
+  { return chars.join(''); }
+
+functype
+  = "enter"
+
+var
+  = type: functype "=" value: funcvalue
+  { return [type.join(''), value.join('')] }
+
+// handle optional delimeter and whitespace
+nvar
+ = v: var ","* _*
+ { return v }
+
+// FIXME: generalize to more than enter
 stateparams
-  = "(" ")" { return true; }
+  = "{" "enter=" val: funcvalue "}"
+  { return { enter: val }; }
 
-state
-  = state:name params:stateparams? { if (params) { parser.addState(state,params); }; return state; }
+//  = _* "{" vars: nvar* "}"
+//  { var ret = {}; vars.forEach(function(i) { ret[i[0]] = i[1] } ); return ret;  }
 
+stateref
+  = state:name
+
+newstate
+  = state:stateref params:stateparams
+  { parser.state(state,params); return state; }
+
+// FIXME: allow inline creation of new states
+// Transitions
 transition
-  = from:state _ "[" when:name "]=>" _ to:state { return parser.addTransition(from,to,when); }
+  = from:name _ "[" when:name "]=>" _ to:name
+  { return parser.addTransition(from,to,when); }
 
 
 
