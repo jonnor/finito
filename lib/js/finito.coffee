@@ -358,6 +358,9 @@ exports.main = () ->
         .action (infile, env) ->
             outfile = env.output || path.basename infile + '-gen.c'
             Definition.fromFile infile, (err, d) ->
+                if err
+                    throw err
+
                 fs.writeFileSync outfile, generateCMachine d.data
 
     commander
