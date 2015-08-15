@@ -58,6 +58,13 @@ finito_machine_run(FinitoMachine *self) {
     }
 }
 
+// XXX: use a proper bool type, or at least abstraction
+int
+finito_machine_running(FinitoMachine *self) {
+    return (self->state > -1 && self->state == self->def->exit_state) ? 1 : 0;
+}
+
+
 // Debugging
 void
 finito_debug_print_transition(FinitoMachine *fsm,
