@@ -259,7 +259,7 @@ generateRunFunction = (name, def) ->
             func = transition.when.function
             args = normalizeCArgs transition.when.args, def
             predicate = if func == "true" or func == "false" then func else "#{func}(#{args})"
-            r += indent+indent+"if (#{predicate}) new_state = #{toId}; break;\n"
+            r += indent+indent+"if (#{predicate}) { new_state = #{toId}; break; } \n"
 
     r += indent+"default: break;\n"
     r += indent + "}\n"
