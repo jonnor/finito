@@ -70,13 +70,12 @@ normalizeMachineDefinition = (def) ->
         run = state.run
         if not run and not (state.enter or state.leave)
             run = state.name
+        def.states[name].transitions = [] # populated later
         def.states[name].run = extractFunctionNameAndArgs run
         def.states[name].enter = extractFunctionNameAndArgs state.enter
         def.states[name].leave = extractFunctionNameAndArgs state.leave
 
-    for i in [0...def.transitions.length]
-        t = def.transitions[i]
-
+    for t in def.transitions
         # Attatch to state
         if not def.states[t.from].transitions?
             def.states[t.from].transitions = []
@@ -84,10 +83,10 @@ normalizeMachineDefinition = (def) ->
 
         # Transition name
         name = t.name || t.when
-        def.transitions[i].name = name
+        t.name = name
 
         # Function predicate
-        def.transitions[i].when = extractFunctionNameAndArgs def.transitions[i].when
+        t.when = extractFunctionNameAndArgs t.when
 
     def.context = def.context || def.name
 
