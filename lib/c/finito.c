@@ -13,6 +13,7 @@ typedef FinitoStateId (*FinitoRunFunction)
     (FinitoStateId current_state, void *context);
 typedef struct _FinitoDefinition {
     FinitoStateId initial_state;
+    FinitoStateId exit_state;
     FinitoRunFunction run_function;
     const char **statenames;
 } FinitoDefinition;

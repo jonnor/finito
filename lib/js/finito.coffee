@@ -60,10 +60,15 @@ extractFunctionNameAndArgs = (fun) ->
     return {'function': fun, 'args': args}
 
 normalizeMachineDefinition = (def) ->
-    id = 0
+    def.initial = {} if not def.initial?
+    def.initial.state = "" if not def.initial.state?
+    def.exit = {} if not def.exit?
+    def.exit.state = "" if not def.exit.state?
+
+    state_id = 0
     for name, state of def.states
         # Assign a numerical ID
-        def.states[name].id = id++
+        def.states[name].id = state_id++
         def.states[name].enum = def.name+'_'+name
 
         # Default run function to name if no enter or leave specified
@@ -91,10 +96,10 @@ normalizeMachineDefinition = (def) ->
     def.context = def.context || def.name
 
 nameToEnum = (name, values) ->
-    return values[name].enum
+    return values[name]?.enum
 
 nameToId = (name, values) ->
-    return values[name].id
+    return values[name]?.id
 
 idToName = (id, values) ->
     for name, val of values
@@ -294,9 +299,6 @@ generateRunFunction = (name, def) ->
     r += "}\n"
     return r
 
-generateInitial = (name, def) ->
-    return 'const FinitoStateId ' + name + " = " + nameToId(def.initial.state, def.states) + ";\n"
-
 generateStringMap = (mapname, values) ->
     indent = "    "
     r = "static const char *#{mapname}[] = {\n"
@@ -311,7 +313,8 @@ generateDefinition = (name, def) ->
     indent = "   "
     r = "FinitoDefinition #{name}_def = {\n"
     initial = nameToId(def.initial.state, def.states)
-    r += indent+"#{initial}, #{name}_run, #{name}_statenames\n"
+    exit = nameToId(def.exit.state, def.states) or -1
+    r += indent+"#{initial}, #{exit}, #{name}_run, #{name}_statenames\n"
     r += "};\n"
     return r
 

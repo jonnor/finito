@@ -11,6 +11,7 @@
   parser.machine = {
     name: "",
     initial: {state: ""},
+    exit: {state: ""},
     states: {},
     transitions: []
   }
@@ -33,7 +34,7 @@
 
   parser.setAttribute = function(name, val) {
     if (parser.debug) console.log('setAttribute', name, val);
-    if (name == "initial") {
+    if (name == "initial" || name == "exit") {
       parser.machine.initial.state = val;
     } else {
       parser.machine[name] = val;
