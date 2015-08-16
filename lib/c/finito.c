@@ -9,12 +9,15 @@ struct _FinitoDefinition;
 struct _FinitoMachine;
 
 // Definition
-typedef FinitoStateId (*FinitoRunFunction)
+typedef FinitoStateId (*FinitoDefNextStateFunction)
     (FinitoStateId current_state, void *context);
+typedef void (*FinitoDefChangeStateFunction)
+    (FinitoStateId current_state, FinitoStateId new_state, void *context);
 typedef struct _FinitoDefinition {
     FinitoStateId initial_state;
     FinitoStateId exit_state;
-    FinitoRunFunction run_function;
+    FinitoDefNextStateFunction next_state;
+    FinitoDefChangeStateFunction change_state;
     const char **statenames;
 } FinitoDefinition;
 
@@ -39,6 +42,7 @@ change_state(FinitoMachine *self, FinitoStateId new_state) {
     if (self->on_state_change) {
         self->on_state_change(self, self->state, new_state);
     }
+    self->def->change_state(self->state, new_state, self->context);
     self->state = new_state;
 }
 
@@ -47,12 +51,15 @@ finito_machine_init(FinitoMachine *self, FinitoDefinition *def, void *context) {
     self->def = def;
     self->context = context;
     self->on_state_change = 0;
-    self->state = self->def->initial_state;
+    self->state = -1;
+
+    // XXX: Consider separating out start()? No-one can observe this..
+    change_state(self, self->def->initial_state);
 }
 
 void
 finito_machine_run(FinitoMachine *self) {
-    const FinitoStateId new_state = self->def->run_function(self->state, self->context);
+    const FinitoStateId new_state = self->def->next_state(self->state, self->context);
     if (new_state != self->state) {
         change_state(self, new_state);
     }
