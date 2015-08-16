@@ -245,7 +245,6 @@ generateTransitionFunction = (name, def) ->
     indent = "    "
     r = "FinitoStateId " + name + "(FinitoStateId current_state, void *context) {\n"
 
-    r += indent + "FinitoStateId new_state = current_state;\n\n"
     r += indent + "// Running state \n"
     r += indent + "switch (current_state) {\n"
     for name, state of def.states
@@ -259,19 +258,21 @@ generateTransitionFunction = (name, def) ->
             func = transition.when.function
             args = normalizeCArgs transition.when.args, def
             predicate = if func == "true" or func == "false" then func else "#{func}(#{args})"
-            r += indent+indent+"if (#{predicate}) { new_state = #{toId}; break; } \n"
+            r += indent+indent+"if (#{predicate}) { return #{toId}; } \n"
+
+        r += indent+indent+"break;\n"
 
     r += indent+"default: break;\n"
     r += indent + "}\n"
     r += indent + "\n"
 
-    r += indent + "return new_state;\n"
+    r += indent + "return current_state;\n"
     r += "}\n"
 
 generateStateChangeFunction = (name, def) ->
     indent = "    "
     r = "void " + name + "(FinitoStateId current_state, FinitoStateId new_state, void *context) {\n"
-    r += indent+"if (new_state != current_state) {\n"
+    r += indent+"if (new_state == current_state) { return;  }\n\n"
 
     r += indent + "// Leave\n"
     r += indent + "switch (current_state) {\n"
@@ -281,8 +282,8 @@ generateStateChangeFunction = (name, def) ->
         if fun
             args = normalizeCArgs state.leave.args, def, true
             predicate = if fun == "true" or fun == "false" then fun else "#{fun}(#{args})"
-            r+= indent+"case #{stateId}: #{predicate}; break;\n"
-    r += indent+"default: break;\n"
+            r+= indent+indent+"case #{stateId}: #{predicate}; break;\n"
+    r += indent+indent+"default: break;\n"
     r += indent + "}\n"
 
     r += indent + "// Enter\n"
@@ -292,9 +293,8 @@ generateStateChangeFunction = (name, def) ->
         fun = state.enter.function
         if fun
             args = normalizeCArgs state.enter.args, def, true
-            r+= indent+"case #{stateId}: #{fun}(#{args}); break; \n"
-    r += indent+"default: break;\n"
-    r += indent + "}\n"
+            r+= indent+indent+"case #{stateId}: #{fun}(#{args}); break; \n"
+    r += indent+indent+"default: break;\n"
 
     r += indent + "}\n"
 
@@ -306,8 +306,8 @@ generateStateChangeFunction = (name, def) ->
         fun = state.run.function
         if fun
             args = normalizeCArgs state.run.args, def, true
-            r+= indent+"case #{stateId}: #{func}(#{args}); break; \n"
-    r += indent+"default: break;\n"
+            r+= indent+indent+"case #{stateId}: #{func}(#{args}); break; \n"
+    r += indent+indent+"default: break;\n"
     r += indent + "}\n"
 
     r += indent + "return;\n"
