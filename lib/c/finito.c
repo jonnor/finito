@@ -3,6 +3,10 @@
  * Finito may be freely distributed under the MIT license
  */
 
+#ifdef FINITO_PRINTF
+#include <stdio.h>
+#endif
+
 // Common
 typedef int FinitoStateId;
 struct _FinitoDefinition;
@@ -77,6 +81,7 @@ void
 finito_debug_print_transition(FinitoMachine *fsm,
                               FinitoStateId old,
                               FinitoStateId new_state) {
+#ifdef FINITO_PRINTF
 #ifdef ARDUINO
     Serial.print(old);
     Serial.print(" to ");
@@ -87,5 +92,6 @@ finito_debug_print_transition(FinitoMachine *fsm,
         finito_definition_statename(fsm->def, new_state)
     );
 #endif
+#endif // FINITO_PRINTF
 }
 
