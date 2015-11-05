@@ -2,6 +2,9 @@ Related
 ========
 
 * [Ragel](http://www.colm.net/open-source/ragel/), FSM based parsing framework with multi-language support
+* [OOSMOS: The Object-Oriented State Machine Operating System](http://oosmos.com/?Action=HN)
+* [Quantum Leaps QP](http://www.state-machine.com/), C/C++ FSM framework, GPLv3/commercial dual-licensed. Has freeware visual editor
+* [SMC - The State Machine Compiler](http://smc.sourceforge.net/)
 
 Finite State Machines & Flow-based programming
 ==============================================
@@ -152,6 +155,7 @@ GUI
 Tool should be able to run in browser (JavaScript) and have web UI. Usable standalone or integrated into NoFlo UI
 
 Resources
+
 * https://github.com/cpettitt/dagre-d3, http://jsfiddle.net/Qh9X5/1502/
 * http://cytoscape.github.io/cytoscape.js/
 * http://bl.ocks.org/rkirsling/5001347
@@ -174,14 +178,20 @@ Others on Finite State Machines
 ===============================
 
 
-"You may not like the idea of auto-generated code today,
-but I guarantee that once you program for a state machine framework,
-you'll see the benefits of the overall structure
-and be ready to move up a level in programming efficiency."
-- Michael Barr, http://www.embedded.com/electronics-blogs/barr-code/4372183/Trends-in-embedded-software-design
+> You may not like the idea of auto-generated code today,
+> but I guarantee that once you program for a state machine framework,
+> you'll see the benefits of the overall structure
+> and be ready to move up a level in programming efficiency."
+Michael Barr, http://www.embedded.com/electronics-blogs/barr-code/4372183/Trends-in-embedded-software-design
 
 ! Finito allows programming with state machines *without* generating code.
 
-"Actually, the main issue isn’t so much designing the state machine, but rather implementing it.
-Even in 2015, we don’t really have a good, widely-accepted set of tools for working with state machines in languages like C or Java."
-- http://www.embeddedrelated.com/showarticle/723.php
+> Actually, the main issue isn’t so much designing the state machine, but rather implementing it.
+> Even in 2015, we don’t really have a good, widely-accepted set of tools for working with state machines in languages like C or Java."
+http://www.embeddedrelated.com/showarticle/723.php
+
+> Now that you are using state machines for modelling,
+> the next thing you will want to do is keeping track of all the state transitions over time.
+> When you are starting out, you may be only interested in the current state of an object, 
+> ut at some point the transition history will be an invaluable source of information.
+https://www.shopify.com/technology/3383012-why-developers-should-be-force-fed-state-machines
