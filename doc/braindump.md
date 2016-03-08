@@ -195,3 +195,21 @@ http://www.embeddedrelated.com/showarticle/723.php
 > When you are starting out, you may be only interested in the current state of an object, 
 > ut at some point the transition history will be an invaluable source of information.
 https://www.shopify.com/technology/3383012-why-developers-should-be-force-fed-state-machines
+
+
+>
+>  > The humble state machine is a more important part of programming
+>  > than people like to admit
+> Here is where I feel a lot of OOP applications are “doing statefullness wrong.”
+> Everyone gloms onto the popular GoF patterns, but explicit state machines are not nearly popular enough.
+
+https://news.ycombinator.com/item?id=11189200
+
+
+## Semirelated
+
+* [Finite state machines as data structure for representing ordered sets and maps](http://blog.burntsushi.net/transducers/)
+
+## Relations to constraint programming
+
+* An FSM can be [reduced to a boolean SAT problem](http://sahandsaba.com/understanding-sat-by-implementing-a-simple-sat-solver-in-python.html)
