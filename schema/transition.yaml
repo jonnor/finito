@@ -1,0 +1,28 @@
+---
+"$schema": "http://json-schema.org/draft-04/schema"
+title: 'FSM state'
+description: |
+  A State of a finite state Machine.
+id: 'transition.json'
+name: 'transition'
+type: object
+additionalProperties: true
+required: [from, to, when]
+properties: 
+  when: 
+    type: string
+    description: |
+      Function that determines whether to transition or not.
+  from: 
+    type: string
+    description: |
+      Name of State we are transitioning from.
+  to: 
+    type: string
+    description: |
+      Name of State we are transitioning to.
+  name: 
+    type: string
+    description: |
+      Human readable name of this transition.
+      Defaults to $when.
