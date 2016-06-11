@@ -29,10 +29,10 @@ void set_lights(TrafficLight *state, bool red, bool yellow, bool green) {
     digitalWrite(yellowLed, yellow);
     digitalWrite(greenLed, green);
 #else
-    printf("[%s]\n[%s]\n[%s]\n\n",
-            red ? "*" : "",
-            yellow ? "*" : "",
-            green ? "*" : ""
+    printf("\r[%s] [%s] [%s]\n",
+            red ? "\e[31m*\e[39m" : " ",
+            yellow ? "\e[33m*\e[39m" : " ",
+            green ? "\e[32m*\e[39m" : " "
     );
 #endif
 }
