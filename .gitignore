@@ -6,3 +6,4 @@ build/
 test/*.js
 test/result.xml
 components
+examples/*/machine
