@@ -44,6 +44,7 @@ add_equivalance_test = (basepath) ->
 # Data-driven tests
 cases = [
     'examples/first/machine'
+    'examples/trafficlights/machine'
 ]
 
 for data in cases
