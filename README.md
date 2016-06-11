@@ -19,9 +19,10 @@ Finito aims to complement and integrate with the
 ## Status
 *Experimental*
 
+* Initial API, JSON format and .fsm DSL exists
 * Can execute some very simple machines in browser and microcontroller
-* Initial API exists
-* Initial DSL defined
+* `finito dot definition.fsm/json` can generate Graphviz for visualization
+* Not used in a application yet
 
 
 ## Installing
