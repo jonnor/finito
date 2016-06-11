@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 require('coffee-script/register')
 finito = require('../lib/js/finito.coffee')
 finito.main()
