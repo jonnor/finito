@@ -68,7 +68,7 @@ anychar "whitespace"
   = [^\n\r\u2028\u2029]
 
 notspecial
-  = [a-zA-Z*0-9_\-.]
+  = [a-zA-Z*0-9_\-.,()]
 
 comment "comment"
   = _ "#" (anychar)*
@@ -77,14 +77,15 @@ line
   = _ transition _ newline
   / _ attribute _ newline
   / _ newstate _ newline
-  / anychar* newline
+  / _ newline
+  / _ comment _ newline
 
 string
   = "\"" anychar* "\""
 
 name "name"
   = chars:notspecial+
-  { return chars.join(''); }
+  { return chars.join(''); }
 
 // Attributes
 attribute "attribute"
