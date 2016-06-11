@@ -1,0 +1,43 @@
+---
+"$schema": "http://json-schema.org/draft-04/schema"
+title: 'FSM machine definition'
+description: |
+  A finite state Machine.
+  This format is used by http://finitosm.org
+id: 'machine.json'
+name: "machine"
+type: object
+required: [name, initial, states, transitions]
+additionalProperties: true # TODO: make attributes go into a specific section, only allowed there
+properties: 
+  name: 
+    description: "Name of the machine"
+    type: string
+  initial: 
+    type: object
+    additionalProperties: false
+    description: "Initial state"
+    properties:
+      additionalProperties: false
+      state:
+        type: string
+        description: "Name of state to enter on machine start"
+  exit: 
+    type: object
+    additionalProperties: false
+    description: "Exit (final) state"
+    properties:
+      additionalProperties: false
+      state:
+        type: string
+        description: "Name of state that terminates the machine"
+  states:
+    type: object
+    items:
+      "$ref": "state.json"    
+  transitions:
+    type: array
+    minItems: 0
+    uniqueItems: true
+    items:
+      "$ref": "transition.json"
