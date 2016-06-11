@@ -29,6 +29,7 @@ MIT
 
 TODO
 -----
+* Add a fluent API for building a Defintion programatically (in JavaScript/CoffeeScript)
 * Handle more general cases in the the .fsm DSL
 * Add interactive visualization that can show and follow current state of machine,
 also when machine is "remote", like running on a microcontroller

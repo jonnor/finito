@@ -1,10 +1,22 @@
 Related
 ========
 
+Open source projects
+
 * [Ragel](http://www.colm.net/open-source/ragel/), FSM based parsing framework with multi-language support
 * [OOSMOS: The Object-Oriented State Machine Operating System](http://oosmos.com/?Action=HN)
 * [Quantum Leaps QP](http://www.state-machine.com/), C/C++ FSM framework, GPLv3/commercial dual-licensed. Has freeware visual editor
 * [SMC - The State Machine Compiler](http://smc.sourceforge.net/)
+
+Open source Libraries
+
+* [Akka FSM](http://doc.akka.io/docs/akka/snapshot/java/fsm.html), part of the actor-framework of Scala.
+* [finite_machine](https://github.com/piotrmurach/finite_machine),
+Ruby Gem including an embedded DSL, and programatic API. Well documented, looks well thought out.
+
+Standards
+
+* UML http://www.uml-diagrams.org/state-machine-diagrams.html
 
 Finite State Machines & Flow-based programming
 ==============================================
@@ -44,7 +56,6 @@ Challenges:
 
 Finito State Machines
 ---------------
-Should probably be a project of its own
 
 * High-level definition of machine: states,transitions (action,predicates)
 * Do we need to specify inputs? For C/C++, should it include the type?
