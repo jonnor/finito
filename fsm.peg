@@ -22,7 +22,7 @@
 
   parser.state = function(name, params) {
     if (parser.debug) console.log('state', name, params, parser.machine.states);
-    states = parser.machine.states;
+    var states = parser.machine.states;
     if (!states[name]) {
         states[name] = {};
     }
