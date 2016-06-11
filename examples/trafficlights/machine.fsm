@@ -1,0 +1,21 @@
+# DSL FTW
+name = TrafficLight
+initial = start
+
+# States
+# FIXME: add leave states again, leave=reset_time()
+start{enter=set_lights(false,false,false)}
+green{enter=set_lights(true,false,false)}
+yellow{enter=set_lights(false,true,false)}
+yellow_and_red{enter=set_lights(false,true,true)}
+red{enter=set_lights(false,false,true)}
+
+# Transitions
+start [true]=> red
+# go red
+green [seconds_passed(3)]=> yellow
+yellow [seconds_passed(1)]=> red
+# go green
+red [seconds_passed(10)]=> yellow_and_red
+yellow_and_red [seconds_passed(1)]=> green
+
