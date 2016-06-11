@@ -1,7 +1,7 @@
 {
   "name": "finitosm",
-  "version": "0.0.4",
-  "description": "Tangible Finite State Machines",
+  "version": "0.0.5",
+  "description": "Introspectable Finite State Machines",
   "keywords": [
     "fsm",
     "finite state machine",
