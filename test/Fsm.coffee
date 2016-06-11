@@ -23,13 +23,12 @@ add_equivalance_test = (basepath) ->
 
         before (finish) ->
             finito.Definition.fromFile fsmfile, (err, res) ->
-                if not err
-                    fsm = res
-                    finish() if json
-            finito.Definition.fromFile jsonfile, (err, res) ->
-                if not err
+                return finish err if err
+                fsm = res
+                finito.Definition.fromFile jsonfile, (err, res) ->
+                    return finish err if err
                     json = res
-                    finish() if fsm
+                    return finish null
 
         describe 'parsing the .fsm and .json definitions', (finish) ->
 
