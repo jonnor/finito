@@ -1,4 +1,12 @@
 language: node_js
 node_js:
-  - "4.2"
+- '4.2'
 sudo: false
+deploy:
+  provider: npm
+  email: jononor@gmail.com
+  api_key:
+    secure: d4ohJBdns6oDXBg6S0LNsz0ubLbsaalGomdqM0WuCp3Q8+WI23X3rP4R+mhHcgoTYBV1SvlZ0htwfohxnDHTsGlkpIugukcGFqSd++ZVgSV+TZfH5JCO68PzQ22uOtB0/ozFVCb/0oDkH3nFnn6PiFzmDx2H8x4spqo5sWJNJjo=
+  on:
+    tags: true
+    repo: jonnor/finito
