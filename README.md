@@ -1,21 +1,42 @@
 Finito State Machines
 ====================
+[![Build Status](https://travis-ci.org/jonnor/finito.svg?branch=master)](https://travis-ci.org/jonnor/finito)
+
 An experiment in [Finite State Machines](http://en.wikipedia.org/wiki/Finite-state_machine)
 (FSM) and [automata-based programming](http://en.wikipedia.org/wiki/Automata-based_programming).
 
 Finito allows you to declare state machines for widely different devices and programming
 languages, that are testable, introspectable at runtime, and visually programmable.
 
-Currently supported targets are C/++ for microcontrollers etc. and [CoffeeScript](http://coffeescript.org/)
-/JavaScript for browser and [Node.js](http://nodejs.org).
+Currently supported targets are C (C++ compatible) for microcontrollers etc.
+and JavaScript for browser/[Node.js](http://nodejs.org).
+
 Finito aims to complement and integrate with the
 [Flow-based Programming](http://en.wikipedia.org/wiki/Flow-based_programming)
 (FBP) runtimes [MicroFlo](http://microflo.org) and [NoFlo](http://noflojs.org).
 
 
-Status
--------
-Experimental
+## Status
+*Experimental*
+
+* Can execute some very simple machines in browser and microcontroller
+* Initial API exists
+* Initial DSL defined
+
+
+## Installing
+
+Finito is on [NPM](http://npmjs.com/)
+
+    npm install finitosm
+
+## Usage
+
+For now see the [examples](./examples) and [tests](./test)
+
+    TODO: document defining a machine using JSON, .fsm DSL, and programmatic API
+    TODO: document how to implement+run in Javascript/browser
+    TODO: document how to implement+run in C/microcontroller
 
 Milestones
 -----------
@@ -30,6 +51,7 @@ MIT
 TODO
 -----
 * Add a fluent API for building a Defintion programatically (in JavaScript/CoffeeScript)
+* Move target-specific code out to separate directories, both for JS and C
 * Handle more general cases in the the .fsm DSL
 * Add interactive visualization that can show and follow current state of machine,
 also when machine is "remote", like running on a microcontroller
