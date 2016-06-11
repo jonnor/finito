@@ -117,10 +117,13 @@ class Definition
         indent = "    "
         r = "digraph #{} {\n"
         r += indent+"rankdir=LR;\n ranksep=\"0.07\"\n"
-        r += indent+ "node  [style=\"rounded,filled,bold\", width=0.4]"
+        r += indent+ "node [style=\"rounded,filled,bold\", width=0.4]"
 
         for state, val of @data.states
-            r += indent+"#{state} [];\n"
+            opts = ''
+            if state == @data.exit.state
+              opts = 'shape=doublecircle, width=0.5, height=0.9'
+            r += indent+"#{state} [#{opts}];\n"
 
         for t in @data.transitions
             r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\"];\n"
@@ -128,12 +131,6 @@ class Definition
         # Mark the inital state
         r += indent+"__start [fillcolor=black, shape=circle, label=\"\", width=0.25];\n"
         r += indent+"__start -> #{@data.initial.state}"
-
-        # Mark the exit state, if any
-        # TODO: allow multiple exit/final states
-        if @data.exit.state
-            r += indent+"__exit [fillcolor=black, shape=doublecircle, label=\"\", width=0.25];\n"
-            r += indent+"#{@data.exit.state} -> __exit"
 
         r += "}";
         return r
