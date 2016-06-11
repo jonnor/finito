@@ -209,7 +209,7 @@ Testing
 * Run machine in virtual/emulated environment, verify that no side-effects occur outside machine state
 * Modify constants/parameters/transitions order programatically from test, run program X times, evaluate failure rates statistically.
 * allow warn/error on non-deterministic (multiple valid) transitions
-
+* allow specifying a set of input data examples as [state-transition-table](https://en.wikipedia.org/wiki/State_transition_table)
 
 Others on Finite State Machines
 ===============================
