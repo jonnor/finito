@@ -10,13 +10,31 @@ Open source projects
 
 Open source Libraries
 
-* [Akka FSM](http://doc.akka.io/docs/akka/snapshot/java/fsm.html), part of the actor-framework of Scala.
+* [Akka FSM Actor](http://doc.akka.io/docs/akka/snapshot/scala/fsm.html), part of the actor-framework of Scala.
+Don't how it is a subclass of Actor, though interesting in relationship to FBP.
+Also include support for FSM logging / event tracing.
 * [finite_machine](https://github.com/piotrmurach/finite_machine),
 Ruby Gem including an embedded DSL, and programatic API. Well documented, looks well thought out.
+* [Qt StateMachine](http://doc.qt.io/qt-4.8/statemachine-api.html), for C++.
+Interestingly has built-in concept of parallel states/transitions. Centered around Qt events, and signals concept.
+Some animation integrations.
+
+Javascript libraries
+
+* [machina.js](https://github.com/ifandelse/machina.js).
+Looks mature, actively developed at least 2012-2015. Includes support for hierarchical FSM.
+Also has `BehavioralFsm`, which operates on external state.
+API makes no separation between FSM definition and implementation.
+* [state.js](https://github.com/steelbreeze/state.js/blob/master/README.md).
+Very classical OOP API, verbose with explicit `new State` foo... Also implementations in C#.
+* [st8](https://www.npmjs.com/package/st8). Active from, 40 releases.
+* [javascript-state-machine](https://www.npmjs.com/package/javascript-state-machine). Hibernating since
+* [fsm-as-promised](https://github.com/vstirbu/fsm-as-promised).
+Focused on asyncrounous functions and transitions, using Promises. Also has a dot/graphviz renderer.
 
 Standards
 
-* UML http://www.uml-diagrams.org/state-machine-diagrams.html
+* [UML state machine diagrams](http://www.uml-diagrams.org/state-machine-diagrams.html)
 
 Finite State Machines & Flow-based programming
 ==============================================
@@ -172,6 +190,11 @@ Resources
 * http://bl.ocks.org/rkirsling/5001347
 * https://github.com/laxatives/Edit-Arbor.js
 * http://visjs.org/docs/graph.html
+
+Graphviz renderers
+
+* [viz.js online demo](https://mdaines.github.io/viz.js/). Compiled to JS with Emscripten.
+* [StackOverflow: Render using graphlib-dot and dagre-d3](http://stackoverflow.com/questions/22595493/reading-dot-files-in-javascript-d3). Native JavaScript.
 
 
 Testing
