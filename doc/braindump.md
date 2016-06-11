@@ -28,7 +28,11 @@ API makes no separation between FSM definition and implementation.
 * [state.js](https://github.com/steelbreeze/state.js/blob/master/README.md).
 Very classical OOP API, verbose with explicit `new State` foo... Also implementations in C#.
 * [st8](https://www.npmjs.com/package/st8). Active from, 40 releases.
-* [javascript-state-machine](https://www.npmjs.com/package/javascript-state-machine). Hibernating since
+* [javascript-state-machine](https://www.npmjs.com/package/javascript-state-machine).
+Event-driven, function for each event - that outside can call to attempt a transition.
+Calls before/enter and leave/after functions via on#phase#eventname naming convention.
+before/leave can cancel transition by returning falsy, so effectively are the guard predicates.
+Hibernating since 2015.
 * [fsm-as-promised](https://github.com/vstirbu/fsm-as-promised).
 Focused on asyncrounous functions and transitions, using Promises. Also has a dot/graphviz renderer.
 
@@ -203,9 +207,8 @@ Testing
 * Apply external stimuli to cause state transition, verify that it did happen
 * Drive a state transition directly from test, verify that state actions were as expected
 * Run machine in virtual/emulated environment, verify that no side-effects occur outside machine state
-* Modify constants/parameters/transitions order programatically from test,
-    run program X times, evaluate failure rates statistically
-
+* Modify constants/parameters/transitions order programatically from test, run program X times, evaluate failure rates statistically.
+* allow warn/error on non-deterministic (multiple valid) transitions
 
 
 Others on Finite State Machines
