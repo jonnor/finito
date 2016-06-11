@@ -4,7 +4,7 @@
   "description": "Tangible Finite State Machines",
   "keywords": [
     "fsm",
-    "finite state machine"
+    "finite state machine",
     "finite state automata"
   ],
   "author": "Jon Nordby <jononor@gmail.com> (http://www.jonnor.com)",
