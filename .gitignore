@@ -2,7 +2,6 @@
 node_modules
 *-gen.*
 build/
-lib/
 .build/
 test/*.js
 test/result.xml
