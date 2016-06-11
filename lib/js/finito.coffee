@@ -124,11 +124,13 @@ class Definition
 
         for t in @data.transitions
             r += indent+"#{t.from} -> #{t.to} [label=\"#{t.name}\"];\n"
+
         # Mark the inital state
         r += indent+"__start [fillcolor=black, shape=circle, label=\"\", width=0.25];\n"
         r += indent+"__start -> #{@data.initial.state}"
 
         # Mark the exit state, if any
+        # TODO: allow multiple exit/final states
         if @data.exit.state
             r += indent+"__exit [fillcolor=black, shape=doublecircle, label=\"\", width=0.25];\n"
             r += indent+"#{@data.exit.state} -> __exit"
