@@ -347,6 +347,28 @@ generateCMachine = (def) ->
 exports.Machine = Machine
 exports.Definition = Definition
 
+renderSvg = (grr) ->
+  dot = require 'graphlib-dot'
+  d3 = require "d3"
+  jsdom = require "jsdom"
+  dagreD3 = require 'dagre-d3'
+
+  graph = dot.read grr
+  console.log 'dagre-d3', dagreD3
+
+  document = jsdom.jsdom()
+  svg = d3.select(document.body).append("svg")
+
+  # HAAAACK
+  previousWindow = global.window
+  global.window = { d3: d3 }
+  global.window.d3 = d3
+  renderer = new dagreD3.render
+  global.window = previousWindow
+  renderer svg, graph
+
+  console.log svg
+
 exports.main = () ->
 
     commander = require 'commander'
@@ -380,6 +402,7 @@ exports.main = () ->
                     throw err
 
                 dot = d.toDot()
+                renderSvg dot
                 if env.output
                     fs.writeFileSync outfile, dot
                 else
