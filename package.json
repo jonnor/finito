@@ -5,6 +5,7 @@
   "keywords": [
     "fsm",
     "finite state machine"
+    "finite state automata"
   ],
   "author": "Jon Nordby <jononor@gmail.com> (http://www.jonnor.com)",
   "repository": {
@@ -12,14 +13,11 @@
     "url": "http://github.com/jonnor/finito.git"
   },
   "bugs": "http://github.com/jonnor/finito/issues",
-  "homepage": "http://jonnor.com",
+  "homepage": "http://finitosm.org",
   "license": "MIT",
   "main": "./lib/js/finito",
   "bin": {
     "finito": "./bin/finito"
-  },
-  "engines": {
-    "node": ">=0.10.0"
   },
   "scripts": {
     "test": "grunt test"
