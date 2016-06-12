@@ -1,0 +1,13 @@
+name = Component
+initial = ready
+
+ready{enter=initialize}
+waiting{enter=_}
+processing{enter=_}
+
+ready [start]=> waiting
+waiting [stop]=> ready
+
+waiting [has_jobs]=> processing
+processing [no_jobs]=> waiting
+

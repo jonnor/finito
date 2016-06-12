@@ -1,0 +1,13 @@
+name = network
+initial = ready
+
+ready{enter=initialize}
+waiting{enter=_}
+processing{enter=_}
+
+ready [all_components_ready_state]=> waiting
+waiting [all_components_waiting]=> ready
+
+waiting [any_components_processing]=> processing
+processing [no_components_processing]=> waiting
+
