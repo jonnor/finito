@@ -15,7 +15,7 @@
   "bugs": "http://github.com/jonnor/finito/issues",
   "homepage": "http://finitosm.org",
   "license": "MIT",
-  "main": "./lib/js/finito",
+  "main": "./src/finito",
   "bin": {
     "finito": "./bin/finito"
   },

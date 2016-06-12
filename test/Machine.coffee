@@ -3,7 +3,7 @@
 # Finito may be freely distributed under the MIT license
 ##
 
-finito = require '../lib/js/finito'
+finito = require '../src/finito'
 if typeof process isnt 'undefined' and process.execPath and process.execPath.indexOf('node') isnt -1
     chai = require('chai');
 else
