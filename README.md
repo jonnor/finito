@@ -49,15 +49,14 @@ License
 --------
 MIT
 
-TODO
------
+## TODO
+
 * Add a schema for the canonical JSON format, enforce in Definition
-* Add tests for .dot rendering, using graphlib-dot parsing
-* Allow dot renderer to output svg/png directly, using d3
+* Allow dot renderer to output svg/png directly?
 * Allow multiple exit/final states
 * Add a fluent API for building a Defintion programatically (in JavaScript/CoffeeScript)
-* Move target-specific code out to separate directories, both for JS and C
 * Handle more general cases in the the .fsm DSL
+* Add some tests for the C Machine
 * Add interactive visualization that can show and follow current state of machine,
 also when machine is "remote", like running on a microcontroller
 * Allow state transitions to be triggered from outside for testing
