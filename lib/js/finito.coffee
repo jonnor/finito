@@ -369,6 +369,11 @@ exports.main = () ->
 
                 fs.writeFileSync outfile, generateCMachine d.data
 
+    # TODO: support --format pdf,svg,png etc. Should use `dot` or whatever
+    # TODO: support --format display, for automatically displaying output. Need to check which programs exist, and use that (or warn)
+    #  | xdot -
+    #  | dot -Tsvg | display
+    #  | dot -Tsvg | inkscape /dev/stdin 
     commander
         .command 'dot'
         .option '-o, --output <FILE>', 'Output file'
