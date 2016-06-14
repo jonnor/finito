@@ -119,6 +119,38 @@ Problem: for most tests, will need to manipulate inputs, and can't wrap those au
 * http://www.cse.ohio-state.edu/~lee/english/pdf/ieee-proceeding-survey.pdf
 * http://en.wikipedia.org/wiki/UML_state_machine#Orthogonal_regions
 
+# Contracts programming as FSM
+
+A function with a body, 
+On preconditions passing, body executes.
+On preconditions failing, errors (with reason).
+If body passes postconditions, success.
+
+    start = input
+    exit = success, preconditionsfailed, postconditionsfailed
+    input{enter=readarguments} =[checkpreconditions]> execute{enter=body}
+    input =[!checkpreconditions]> preconditionsfailed{enter=returnerror}
+
+    execute =[postconditionspass]> success{enter=pushresults}
+    execute =[!postconditionspass]> postconditionsfailed{enter=returnerror}
+
+# FSM as general purpose language
+
+If one could demonstrate how one would do the equivalent of typical imperative language structures,
+that would be a good indicator of the computing model being generic enough for general-purpose use?
+
+For/while loop, continue/break, If/else..
+
+Could one construct a general-purpose language using FSM + expressions?
+Would need some memory model, and some load/store capability also?
+Can one avoid assignments entirely, or enforce single-assignment?
+
+Implicit? stack/register model. If bare-metal will need to transfer things into CPU registers anyhow
+
+If this is possible, could be fun to have macros/meta-language which generates FSM/expressions.
+Can for instance re-create above constructs from imperative languages.
+
+
 Reusable state machine components
 ===================================
 
