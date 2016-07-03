@@ -7,18 +7,18 @@ id: 'state.json'
 name: 'state'
 type: object
 properties: 
-  run: 
-    type: string
+  run: # FIXME: should be string, need to replace arg handling
+    type: object
     description: |
       Function for executing the state continously.
       Defaults to the name of the state.
-  enter: 
-    type: string
+  enter: # FIXME: should be string, need to replace arg handling
+    type: object
     description: |
       Function called when transitioning _to_ the state (entering).
       Defaults to no function.
-  leave: 
-    type: string
+  leave: # FIXME: should be string, need to replace arg handling
+    type: object
     description:
       Function called when transitioning _from_ the state (leaving).
       Defaults to no function.

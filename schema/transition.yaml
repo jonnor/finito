@@ -9,8 +9,8 @@ type: object
 additionalProperties: true
 required: [from, to, when]
 properties: 
-  when: 
-    type: string
+  when: # FIXME: should be string, need to replace arg handling
+    type: object
     description: |
       Function that determines whether to transition or not.
   from: 
