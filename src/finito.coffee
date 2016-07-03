@@ -3,6 +3,7 @@
 # Finito may be freely distributed under the MIT license
 
 Definition = require './definition'
+Builder = require './builder'
 common = require './common'
 main = require './main'
 
@@ -14,6 +15,9 @@ exports.targets =
 
 exports.Machine = exports.targets.js
 exports.Definition = Definition
+exports.Builder = Builder
+exports.define = (n) ->
+  return new Builder n
 
 exports.main = () ->
 
