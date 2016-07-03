@@ -9,3 +9,4 @@ components
 examples/*/machine
 examples/*/*.fsm.png
 examples/*/*.fsm.svg
+schema/*.json

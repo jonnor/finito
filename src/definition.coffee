@@ -3,6 +3,7 @@
 # Finito may be freely distributed under the MIT license
 
 common = require './common'
+schemas = require './schemas'
 
 extractFunctionNameAndArgs = (fun) ->
     args = []

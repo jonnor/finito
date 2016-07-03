@@ -4,6 +4,7 @@
 
 Definition = require './definition'
 Builder = require './builder'
+schemas = require './schemas'
 common = require './common'
 main = require './main'
 
@@ -13,6 +14,7 @@ exports.targets =
   c: require '../targets/c/generate'
   js: require '../targets/js/machine'
 
+exports.schemas = schemas
 exports.Machine = exports.targets.js
 exports.Definition = Definition
 exports.Builder = Builder

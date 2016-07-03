@@ -19,6 +19,15 @@ module.exports = ->
         files:
           'build/tests.js': ['test/Machine.coffee']
 
+    yaml:
+      schemas:
+        files: [
+          expand: true
+          cwd: 'schema/'
+          src: '*.yaml'
+          dest: 'schema/'
+        ]
+
     # JavaScript minification for the browser
     uglify:
       options:
@@ -57,6 +66,7 @@ module.exports = ->
 
 
   # Grunt plugins used for building
+  @loadNpmTasks 'grunt-yaml'
   @loadNpmTasks 'grunt-browserify'
   @loadNpmTasks 'grunt-contrib-uglify'
   @loadNpmTasks 'grunt-contrib-copy'
@@ -71,6 +81,7 @@ module.exports = ->
 
   # Our local tasks
   @registerTask 'build', 'Build Finito for the chosen target platform', (target = 'all') =>
+    @task.run 'yaml'
     if target is 'all' or target is 'browser'
       @task.run 'browserify'
       @task.run 'uglify'
