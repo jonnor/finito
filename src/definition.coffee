@@ -63,9 +63,22 @@ normalizeMachineDefinition = (def) ->
 # TODO: allow to calculate all impossible paths, for a given state and whole machine
 # TODO: support extracting description from source file
 class Definition
-    constructor: (data) ->
+    constructor: (data, options) ->
         @data = data
         normalizeMachineDefinition @data
+
+        options = {} if not options?
+
+        options.validate = Definition.validate if not options.validate?
+        if options.validate
+          result = @validate()
+          throw new Error "finito missing schemas:" if not result.missing
+          if not result.valid
+            for e in result.errors
+              e.stack = undefined
+            prettyErrors = JSON.stringify result.errors, null, 2
+            prettyDef = JSON.stringify @data, null, 2
+            throw new Error "finito.Definition did not validate: #{prettyErrors}\n #{prettyDef}"
 
     toDot: () ->
         indent = "    "
@@ -88,6 +101,12 @@ class Definition
 
         r += "}";
         return r
+
+    validate: () ->
+      tv4 = require 'tv4'
+      for name, schema of schemas
+        tv4.addSchema schema
+      return tv4.validateMultiple @data, schemas.machine
 
 
 Definition.fromJSON = (content) ->

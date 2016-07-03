@@ -11,6 +11,8 @@ else
     finito = require '../build/finito'
     chai = window.chai
 
+finito.Definition.validate = true
+
 # TODO: make possible to run in browser, fetching data using HTTP
 add_equivalance_test = (basepath) ->
 
