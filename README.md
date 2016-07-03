@@ -51,19 +51,35 @@ MIT
 
 ## TODO
 
-* Add a schema for the canonical JSON format, enforce in Definition
-* Allow dot renderer to output svg/png directly?
+### v0.1 "minimally useful"
+
+Format
+
+* Find alternate way of doing the 'parametrized' function
 * Allow multiple exit/final states
-* Add a fluent API for building a Defintion programatically (in JavaScript/CoffeeScript)
-* Handle more general cases in the the .fsm DSL
-* Add some tests for the C Machine
+
+API
+
+* Add tests for fluent JS API
+
+Targets
+
+* C: Add some tests
+* JS: Support methods as state actions and predicates?
+
+Tools
+
+* Allow dot renderer to output svg/png directly?
 * Add interactive visualization that can show and follow current state of machine,
 also when machine is "remote", like running on a microcontroller
-* Allow state transitions to be triggered from outside for testing
-* Allow state transitions in microcontroller to be persisted in ROM, read back out and replayed
-* Support C++ methods as state actions and predicates
-* Support JS methods as state actions and predicates
 * Demonstrate integration of machines spanning microcontroller and web
 * Add a UI for creating state machines visually
+
+
+### Later
+
+* Allow state transitions in microcontroller to be persisted in ROM, read back out and replayed
 * Add support for hierarchical machines
-* Add support for FPGAs targets using VHDL/Verilog
+* targets: Add support for FPGAs using VHDL/Verilog
+* DSL: Handle more general cases in the the .fsm DSL
+* Add a C++ target, with support methods as state actions and predicates
