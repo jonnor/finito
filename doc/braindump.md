@@ -275,6 +275,11 @@ https://www.shopify.com/technology/3383012-why-developers-should-be-force-fed-st
 https://news.ycombinator.com/item?id=11189200
 
 
+> Using techniques like these, CloudPlane maintains 100% line coverage.
+> Maintaining 100% line coverage allows efficient location of most untested code in new patches.
+
+https://www.citusdata.com/blog/2016/08/12/state-machines-to-run-databases/
+
 ## Semirelated
 
 * [Finite state machines as data structure for representing ordered sets and maps](http://blog.burntsushi.net/transducers/)
