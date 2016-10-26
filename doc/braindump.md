@@ -35,10 +35,24 @@ before/leave can cancel transition by returning falsy, so effectively are the gu
 Hibernating since 2015.
 * [fsm-as-promised](https://github.com/vstirbu/fsm-as-promised).
 Focused on asyncrounous functions and transitions, using Promises. Also has a dot/graphviz renderer.
+* [TypeState](https://github.com/eonarheim/TypeState), strongly typed FSM using TypeScript.
 
 Standards
 
 * [UML state machine diagrams](http://www.uml-diagrams.org/state-machine-diagrams.html)
+
+Tutorials/blogposts
+
+* [Pretty state machines in Rust](https://hoverbear.org/2016/10/12/rust-state-machine-pattern/).
+Uses algebraic types to define states and transitions, allowing the compiler to verify that
+attempted transitions are valid.
+
+
+Papers
+
+* [Computation and State Machines](http://research.microsoft.com/en-us/um/people/lamport/pubs/state-machine.pdf),
+describes using state machines for arbitrary computations.
+
 
 Finite State Machines & Flow-based programming
 ==============================================
@@ -233,15 +247,31 @@ Graphviz renderers
 * [StackOverflow: Render using graphlib-dot and dagre-d3](http://stackoverflow.com/questions/22595493/reading-dot-files-in-javascript-d3). Native JavaScript.
 
 
-Testing
-----------
-* Log state transitions, verify that each state has been visisted (by manual or automated test)
+# Testing
+
+Ideas
+
+* Log/collect state transitions, verify that each state has been visisted (by manual or automated test)
 * Apply external stimuli to cause state transition, verify that it did happen
 * Drive a state transition directly from test, verify that state actions were as expected
 * Run machine in virtual/emulated environment, verify that no side-effects occur outside machine state
-* Modify constants/parameters/transitions order programatically from test, run program X times, evaluate failure rates statistically.
+* Mutate constants/parameters/transitions order programatically from test, run program X times, evaluate failure rates statistically.
 * allow warn/error on non-deterministic (multiple valid) transitions
 * allow specifying a set of input data examples as [state-transition-table](https://en.wikipedia.org/wiki/State_transition_table)
+* ensure that certain invariants in state hold regardless of path taken to the state
+
+Work by others
+
+* [Using PropEr to test FSMs](http://proper.softlab.ntua.gr/Tutorials/PropEr_testing_of_finite_state_machines.html).
+PropEr is property-based testing for Erlang.
+* [ACCU: Testing State Machines](https://accu.org/index.php/journals/1548), argues for separating out Actions as an interface,
+and handing the implementation to the State Machine. Then one can use an implemtantion which records the actions/effects
+when testing the state machine, and test the implementation of the actions separately.
+Especially where the actions effects are considerable, ie affecting hardware in embedded system, external data store or networked service.
+* [Model Based Testing - FSM based testing](http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/tov-fsm-test.pdf), covers different testing strategies, like
+Transition testing, Object testing, FSM test coverage.
+
+
 
 Others on Finite State Machines
 ===============================
