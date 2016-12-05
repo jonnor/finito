@@ -40,6 +40,7 @@ Focused on asyncrounous functions and transitions, using Promises. Also has a do
 Standards
 
 * [UML state machine diagrams](http://www.uml-diagrams.org/state-machine-diagrams.html)
+* [States language](https://states-language.net/spec.html), project by Amazon. Defines a JSON format.
 
 Tutorials/blogposts
 
