@@ -40,7 +40,7 @@ Focused on asyncrounous functions and transitions, using Promises. Also has a do
 Standards
 
 * [UML state machine diagrams](http://www.uml-diagrams.org/state-machine-diagrams.html)
-* [States language](https://states-language.net/spec.html), project by Amazon. Defines a JSON format.
+* [States language](https://states-language.net/spec.html), project by Amazon. Defines a JSON format. Sadly has no JSON schema?
 
 Tutorials/blogposts
 
@@ -318,3 +318,10 @@ https://www.citusdata.com/blog/2016/08/12/state-machines-to-run-databases/
 ## Relations to constraint programming
 
 * An FSM can be [reduced to a boolean SAT problem](http://sahandsaba.com/understanding-sat-by-implementing-a-simple-sat-solver-in-python.html)
+
+## Testcases
+Cases that might be interesting to try to express with Finito.
+
+* [elevator-kata](https://github.com/Pragmatists/elevator-kata). The requirements might suggest a hierachical state machine.
+* [GameOfLife](http://codingdojo.org/cgi-bin/index.pl?KataGameOfLife). Each cell can be seen as a state machine.
+
