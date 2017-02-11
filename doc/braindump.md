@@ -325,3 +325,7 @@ Cases that might be interesting to try to express with Finito.
 * [elevator-kata](https://github.com/Pragmatists/elevator-kata). The requirements might suggest a hierachical state machine.
 * [GameOfLife](http://codingdojo.org/cgi-bin/index.pl?KataGameOfLife). Each cell can be seen as a state machine.
 
+Existing examples
+
+* [Around 20 state-machine examples for Umple modelling tool](https://github.com/umple/umple/wiki/examples#state-machine-examples)
+
