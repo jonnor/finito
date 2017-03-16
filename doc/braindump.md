@@ -48,11 +48,14 @@ Tutorials/blogposts
 Uses algebraic types to define states and transitions, allowing the compiler to verify that
 attempted transitions are valid.
 
-
 Papers
 
 * [Computation and State Machines](http://research.microsoft.com/en-us/um/people/lamport/pubs/state-machine.pdf),
 describes using state machines for arbitrary computations.
+
+Other uses
+
+* [Index 1,600,000,000 Keys with Automata and Rust](http://blog.burntsushi.net/transducers/)
 
 
 Finite State Machines & Flow-based programming
@@ -269,8 +272,9 @@ PropEr is property-based testing for Erlang.
 and handing the implementation to the State Machine. Then one can use an implemtantion which records the actions/effects
 when testing the state machine, and test the implementation of the actions separately.
 Especially where the actions effects are considerable, ie affecting hardware in embedded system, external data store or networked service.
-* [Model Based Testing - FSM based testing](http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/tov-fsm-test.pdf), covers different testing strategies, like
-Transition testing, Object testing, FSM test coverage.
+* [Model Based Testing - FSM based testing](http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/tov-fsm-test.pdf), covers different testing strategies, like Transition testing, Object testing, FSM test coverage.
+* [BuDDy - A Binary Decision Diagram Package](http://vlsicad.eecs.umich.edu/BK/Slots/cache/www.itu.dk/research/buddy/),
+which has been used to verify large FSMs. See Verification of Large State/Event systems Using Compositionality and Dependency Analysis.
 
 
 
