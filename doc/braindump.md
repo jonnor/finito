@@ -47,6 +47,8 @@ Tutorials/blogposts
 * [Pretty state machines in Rust](https://hoverbear.org/2016/10/12/rust-state-machine-pattern/).
 Uses algebraic types to define states and transitions, allowing the compiler to verify that
 attempted transitions are valid.
+* [A Guide to Managing Finite State Machine Using Django FSM](https://hashedin.com/2017/05/30/manage-finite-state-machine-using-django/?utm_source=HN&utm_campaign=Blog_SM). The state of the FSM is stored in relational databasa via ORM. Many data instances can exist.
+Transitions declared as Python decorators on methods. Additional modules for admin pages and FSM transaction logs.
 
 Papers
 
