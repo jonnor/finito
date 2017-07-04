@@ -10,7 +10,7 @@ deploy:
   provider: npm
   email: jononor@gmail.com
   api_key:
-    secure: d4ohJBdns6oDXBg6S0LNsz0ubLbsaalGomdqM0WuCp3Q8+WI23X3rP4R+mhHcgoTYBV1SvlZ0htwfohxnDHTsGlkpIugukcGFqSd++ZVgSV+TZfH5JCO68PzQ22uOtB0/ozFVCb/0oDkH3nFnn6PiFzmDx2H8x4spqo5sWJNJjo=
+    secure: Y/CEf+Yr6Ri5qsofLsSG6X/fHVkCiOr/hilLCnNNS8ZIPl2XBSHRD8ZCt0J/9DiTYUYzd01khQBINJJuhCAI1oVv8teIcGWBWcdFkcJsC8PXJx39EqhEdNC/0hvZ+qxEnF0XDu7N6XUFBcsPWQ3QNV3dpJJsrxDoDgfB+Z1cu+s=
   on:
     tags: true
     repo: jonnor/finito
