@@ -49,7 +49,6 @@ addMachineChainedMethods = (obj) ->
     machine = obj.machine
     obj[name] = () ->
       ret = machine[name].apply machine, arguments
-      console.log 'chain for', name, 'returned', ret
       return ret
 
 class TransitionBuilder
