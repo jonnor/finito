@@ -49,6 +49,9 @@ Uses algebraic types to define states and transitions, allowing the compiler to 
 attempted transitions are valid.
 * [A Guide to Managing Finite State Machine Using Django FSM](https://hashedin.com/2017/05/30/manage-finite-state-machine-using-django/?utm_source=HN&utm_campaign=Blog_SM). The state of the FSM is stored in relational databasa via ORM. Many data instances can exist.
 Transitions declared as Python decorators on methods. Additional modules for admin pages and FSM transaction logs.
+* [Implementing State Machines in PostgreSQ](http://felixge.de/2017/07/27/implementing-state-machines-in-postgresql.html).
+Uses SQL to enforce valid state transitions, and stores all transition events. Custom aggregate used to reduce events to current state.
+Also shows how can get analytics easily from event log.
 
 Papers
 

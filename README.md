@@ -35,15 +35,9 @@ Finito is on [NPM](http://npmjs.com/)
 
 For now see the [examples](./examples) and [tests](./test)
 
-    TODO: document defining a machine using JSON, .fsm DSL, and programmatic API
+    TODO: document defining a machine using programmatic API
     TODO: document how to implement+run in Javascript/browser
     TODO: document how to implement+run in C/microcontroller
-
-Milestones
------------
-* 0.1.0: One can create components for MicroFlo using Finito
-* x.0.0: One can visually create, introspect and debug state machines,
-using standalone tool or in combination with Flowhub.io
 
 License
 --------
@@ -53,14 +47,15 @@ MIT
 
 ### v0.1 "minimally useful"
 
-Format
+Data model
 
-* Find alternate way of doing the 'parametrized' function
 * Allow multiple exit/final states
+* Find alternate way of doing 'parametrized' functions
 
-API
+DSL/API
 
 * Add tests for fluent JS API
+* Remove .fsm DSL in favor of embedded JS API
 
 Targets
 
@@ -70,16 +65,15 @@ Targets
 Tools
 
 * Allow dot renderer to output svg/png directly?
-* Add interactive visualization that can show and follow current state of machine,
-also when machine is "remote", like running on a microcontroller
 * Demonstrate integration of machines spanning microcontroller and web
-* Add a UI for creating state machines visually
 
 
 ### Later
 
+* Add interactive visualization that can show and follow current state of machine,
+also when machine is "remote", like running on a microcontroller
 * Allow state transitions in microcontroller to be persisted in ROM, read back out and replayed
 * Add support for hierarchical machines
+* Add a UI for creating state machines visually
 * targets: Add support for FPGAs using VHDL/Verilog
-* DSL: Handle more general cases in the the .fsm DSL
 * Add a C++ target, with support methods as state actions and predicates
