@@ -18,6 +18,8 @@ Ruby Gem including an embedded DSL, and programatic API. Well documented, looks 
 * [Qt StateMachine](http://doc.qt.io/qt-4.8/statemachine-api.html), for C++.
 Interestingly has built-in concept of parallel states/transitions. Centered around Qt events, and signals concept.
 Some animation integrations.
+* [Fluent-State-Machine](https://github.com/Real-Serious-Games/Fluent-State-Machine) for C#.
+* [Stateless](https://github.com/dotnet-state-machine/stateless) for C#. Supports hierachical states (sub-states).
 
 Javascript libraries
 
@@ -280,7 +282,12 @@ Especially where the actions effects are considerable, ie affecting hardware in 
 * [Model Based Testing - FSM based testing](http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/tov-fsm-test.pdf), covers different testing strategies, like Transition testing, Object testing, FSM test coverage.
 * [BuDDy - A Binary Decision Diagram Package](http://vlsicad.eecs.umich.edu/BK/Slots/cache/www.itu.dk/research/buddy/),
 which has been used to verify large FSMs. See Verification of Large State/Event systems Using Compositionality and Dependency Analysis.
-
+* [FSM-Based Test Case Generation Methods Applied to Test the Communication Software on Board the ITASAT University Satellite](https://www.researchgate.net/publication/287561626_FSM-Based_Test_Case_Generation_Methods_Applied_to_test_the_Communication_Software_on_board_the_ITASAT_University_Satellite_a_Case_Study).
+Using Model-based Testing with FSM as the underlying formalism. `JPlavisFSM`, a GUI tool for creating, analyzing and testing FSMs.
+Can report structural properties such as `complete`, `strongly connected`, `deterministic`.
+Lists a number of methods that verify a FSM model against FSM implementation:
+`W` (Chow, 1978), `UIO` (Sabnani and Dahbura, 1988), `UIOv` (Vuong, 1989), `Wp` (Fujiwara, 1991), `HSI` (Petrenko, 1993) and `SPY` (Simão, 2009)
+* [Testing Software Design Modelled by Finite State Machines (Chow, 1978)](https://code.oregonstate.edu/svn/jdmcs362w10/papers/chow.pdf). Foundational paper. Defines a testing strategy `W`. Splits possible errors in an FSM implementation into "Operation Errors", "Transfer Errors", "Extra States", "Missing States".  Also defines test coverages, "Branch Cover", "Switch Cover", "Boundary-Interior Cover", "H-Language".
 
 
 Others on Finite State Machines
